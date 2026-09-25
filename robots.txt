@@ -1,0 +1,6 @@
+# robots.txt for AMNAISYS Enterprise Technology
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://amnaisys.com/sitemap.xml
