@@ -1,0 +1,13 @@
+# AMNAISYS Netlify Redirects & Language Routing
+
+# Root Redirects based on Gulf / Arab Countries
+/   /ar/index.html   302   Country=sa,ae,kw,qa,bh,om
+/   /en/index.html   302
+
+# Clean URL Routing for Services
+/services/ai-automation    /en/services/ai-automation.html    200
+/services/ai-agents        /en/services/ai-agents.html        200
+/services/cybersecurity    /en/services/cybersecurity.html    200
+
+# 404 Error Page Fallback
+/*   /404.html   404
