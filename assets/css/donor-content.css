@@ -18,7 +18,7 @@
     font-size: var(--type-body);
     line-height: var(--body-line-height);
     --gold: var(--color-gold);
-    --gold-text: #7a6039;
+    --gold-text: #76592F;
     --green: var(--color-green);
     --green-dark: #006f3d;
     --ink: var(--color-near-black);
@@ -45,7 +45,7 @@
     --section: var(--spacing-2xl);
     --ease: cubic-bezier(.2,.75,.25,1);
   }
-  .donor-content ::selection { background: var(--green-dark); color: #fff; }
+  .donor-content ::selection { background: var(--color-green-dark); color: #fff; }
   .donor-content :focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-radius: 4px; }
   .donor-content h1, .donor-content h2, .donor-content h3, .donor-content h4 { color: var(--color-near-black); font-weight: var(--weight-heading); line-height: var(--heading-line-height); letter-spacing: normal; text-wrap: balance; }
   html[lang^="ar"] .donor-content h1, html[lang^="ar"] .donor-content h2, html[lang^="ar"] .donor-content h3, html[lang^="ar"] .donor-content h4 { letter-spacing: 0; line-height: 1.35; }
@@ -95,7 +95,7 @@
   .donor-content .hero { position: relative; padding-block: clamp(3.5rem, 6vw, 4.5rem); }
   .donor-content .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 78% 40%, rgba(195,160,105,.12), transparent 30%), radial-gradient(circle at 16% 16%, rgba(0,143,78,.05), transparent 24%); }
   .donor-content .hero__grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.16fr) minmax(360px, .84fr); align-items: center; gap: clamp(48px, 7vw, 110px); }
-  .donor-content .eyebrow { color: var(--color-green); text-transform: uppercase; letter-spacing: .05em; font-weight: var(--weight-heading); font-size: var(--type-label); line-height: 1.4; }
+  .donor-content .eyebrow { color: var(--color-brand-label); text-transform: uppercase; letter-spacing: .05em; font-weight: var(--weight-heading); font-size: var(--type-label); line-height: 1.4; }
   html[lang^="ar"] .donor-content .eyebrow { text-transform: none; letter-spacing: 0; font-size: var(--type-label); }
   .donor-content .hero h1 { max-width: 900px; margin-top: 1rem; font-size: var(--type-page-title); letter-spacing: normal; }
   html[lang^="ar"] .donor-content .hero h1 { font-size: var(--type-page-title); letter-spacing: 0; line-height: 1.35; }
@@ -142,7 +142,7 @@
   .donor-content .service-card:hover, .donor-content .scenario-card:hover, .donor-content .insight-card:hover, .donor-content .industry-card:hover, .donor-content .service-card:focus-within, .donor-content .scenario-card:focus-within, .donor-content .insight-card:focus-within, .donor-content .industry-card:focus-within { transform: translateY(-5px); box-shadow: var(--shadow-sm); border-color: #c9c2b6; }
   .donor-content .service-card--strategic { border-top: 4px solid var(--green-dark); }
   .donor-content .card-index { display: block; color: var(--gold-text); font-weight: var(--weight-heading); font-size: var(--type-label); letter-spacing: .05em; margin-bottom: var(--spacing-lg); }
-  .donor-content .service-card h3, .donor-content .scenario-card h3, .donor-content .insight-card h3, .donor-content .industry-card h3 { font-size: var(--type-card-title); line-height: 1.35; }
+  .donor-content .service-card h3, .donor-content .scenario-card :is(h2, h3), .donor-content .insight-card :is(h2, h3), .donor-content .industry-card :is(h2, h3) { font-size: var(--type-card-title); line-height: 1.35; }
   .donor-content .service-card p, .donor-content .scenario-card p, .donor-content .insight-card p, .donor-content .industry-card p { color: var(--muted); margin-top: 12px; font-size: var(--type-card-body); line-height: var(--line-card-body); }
   .donor-content .text-link { margin-top: var(--spacing-lg); display: inline-flex; align-items: center; gap: 8px; color: var(--color-green); font-weight: var(--weight-semibold); }
   .donor-content .text-link:hover { text-decoration: underline; text-underline-offset: 4px; }
@@ -293,7 +293,7 @@
   .donor-content .form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 18px; }
   .donor-content .field { display: grid; gap: 8px; align-content: start; }
   .donor-content .field--full { grid-column: 1/-1; }
-  .donor-content .field > span { font-size: 14px; font-weight: 700; }
+  .donor-content .field > span:not(.phone-input-shell):not(.select-shell) { font-size: 14px; font-weight: 700; }
   .donor-content .field b { color: var(--danger); }
   .donor-content .field em { font-style: normal; color: var(--muted); font-weight: 500; font-size: 12px; }
   .donor-content .field input, .donor-content .field select, .donor-content .field textarea { width: 100%; border: 1px solid #cfc9be; background: var(--canvas); color: var(--ink); border-radius: var(--radius-xs); min-height: 50px; padding: 12px 14px; transition: border-color .2s ease, box-shadow .2s ease; }
@@ -574,12 +574,16 @@ html[dir="rtl"] .donor-content .eyebrow { letter-spacing: 0; }
    headings and Applied Solution detail-page rhythm.
    ======================================================================== */
 
-/* Brand-green editorial labels on light surfaces. Inverse sections retain the
-   established pale-green high-contrast treatment. */
-.donor-content .eyebrow,
+/* Editorial eyebrows stay brand green. Applied Solution card categories use
+   the same static dark-gold text role as Insight dates; inverse labels retain
+   the established pale-green high-contrast treatment. */
+.donor-content .eyebrow {
+  color: var(--color-brand-label) !important;
+}
 .donor-content .scenario-card:nth-child(even) .solution-card-category,
 .donor-content .solution-card-category {
-  color: var(--color-green) !important;
+  color: var(--color-gold-text) !important;
+  transition: none !important;
 }
 .donor-content .section-heading--inverse .eyebrow,
 .donor-content .governance-shell__intro .eyebrow,
@@ -742,9 +746,8 @@ html[dir="rtl"] .donor-content .outcome:last-child {
   font-size: var(--material-symbol-size, 2.15rem);
 }
 
-/* Insight detail headings are editorial signposts and use the shared brand
-   green requested for all three individual insight pages. */
-.donor-content .article-body h2 { color: var(--color-green) !important; }
+/* Insight detail headings follow the shared near-black editorial heading
+   contract; green remains reserved for labels, links and interaction states. */
 
 /* Applied Solution related capabilities now share the same soft-green size,
    spacing and two-column panel rhythm as service detail pages. */
@@ -925,4 +928,109 @@ html[dir="rtl"] .donor-content .contact-preferred-route-section .contact-channel
 .donor-content .text-link .action-arrow-glyph {
   display: inline-block;
   vertical-align: middle;
+}
+
+
+/* ==========================================================================
+   Production image integration — donor page hero family (v27)
+   Industries and Insights use a framed 4:3 photograph on desktop/tablet and
+   convert that same real <picture> into a directional image overlay on mobile.
+   ========================================================================== */
+.donor-content .page-hero--media {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 91% 88%, rgba(0,143,78,.20) 0%, rgba(0,143,78,.08) 28%, transparent 53%),
+    linear-gradient(100deg, #071510 0%, #0A261A 56%, #123F2D 100%);
+}
+html[dir="rtl"] .donor-content .page-hero--media {
+  background:
+    radial-gradient(circle at 9% 88%, rgba(0,143,78,.20) 0%, rgba(0,143,78,.08) 28%, transparent 53%),
+    linear-gradient(260deg, #071510 0%, #0A261A 56%, #123F2D 100%);
+}
+.donor-content .page-hero--media .page-hero__grid {
+  grid-template-columns: minmax(0,1.04fr) minmax(380px,.96fr);
+  gap: clamp(2.75rem,6vw,6.5rem);
+  align-items: start;
+}
+.donor-content .page-hero--media .eyebrow {
+  color: var(--color-green-on-dark) !important;
+}
+.donor-content .page-hero--media h1 {
+  color: var(--color-hero-gold);
+  text-shadow: 0 2px 16px rgba(0,0,0,.20);
+}
+.donor-content .page-hero--media .page-hero__lede {
+  color: rgba(255,255,255,.88);
+}
+.donor-content .page-hero__media {
+  display: block;
+  justify-self: end;
+  width: min(100%, 520px);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid rgba(195,160,105,.68);
+  border-radius: 18px;
+  background: #EAE4D8;
+  box-shadow:
+    0 22px 52px rgba(0,0,0,.30),
+    0 0 34px rgba(0,143,78,.12);
+}
+.donor-content .page-hero__media img { width:100%; height:100%; object-fit:cover; object-position:center; }
+html[dir="rtl"] .donor-content .page-hero--media .page-hero__media { justify-self:start; }
+
+@media (min-width: 761px) and (max-width: 980px) {
+  .donor-content .page-hero--media .page-hero__grid {
+    grid-template-columns:minmax(0,1fr) minmax(300px,.78fr);
+    gap:2.25rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .donor-content .page-hero--media {
+    min-height: clamp(490px,132vw,650px);
+    display:grid;
+    align-items:center;
+    padding-block: clamp(3.75rem,13vw,5.25rem);
+    border-bottom: 1px solid rgba(227,222,211,.55);
+    background: var(--color-charcoal-deep);
+  }
+  .donor-content .page-hero--media::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg, rgba(5,23,16,.87) 0%, rgba(7,31,21,.70) 55%, rgba(5,18,13,.49) 100%),
+      linear-gradient(180deg, rgba(4,12,9,.06), rgba(4,12,9,.36));
+  }
+  html[dir="rtl"] .donor-content .page-hero--media::after {
+    background:
+      linear-gradient(270deg, rgba(5,23,16,.87) 0%, rgba(7,31,21,.70) 55%, rgba(5,18,13,.49) 100%),
+      linear-gradient(180deg, rgba(4,12,9,.06), rgba(4,12,9,.36));
+  }
+  .donor-content .page-hero--media .page-hero__grid { display:block; }
+  .donor-content .page-hero--media .page-hero__grid > :first-child {
+    position:relative;
+    z-index:2;
+    max-width:680px;
+  }
+  .donor-content .page-hero--media .page-hero__media {
+    position:absolute;
+    inset:0;
+    z-index:0;
+    width:100%;
+    height:100%;
+    max-width:none;
+    aspect-ratio:auto;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+  }
+  .donor-content .page-hero--media .page-hero__media img { width:100%; height:100%; object-fit:cover; filter:saturate(.94); }
+  .donor-content .page-hero--media .eyebrow { color:var(--color-green-on-dark); }
+  .donor-content .page-hero--media h1 { color:var(--color-hero-gold); text-shadow:0 2px 16px rgba(0,0,0,.24); }
+  .donor-content .page-hero--media .page-hero__lede { color:rgba(255,255,255,.88); }
 }

@@ -1,532 +1,467 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url><loc>https://amnaisys.com/</loc><lastmod>2026-09-30</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url>
     <loc>https://amnaisys.com/ar/about.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/about.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/about.html"/>
-  </url>
-  <url>
-    <loc>https://amnaisys.com/ar/case-studies/customer-service-automation.html</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/case-studies/customer-service-automation.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/case-studies/customer-service-automation.html"/>
-  </url>
-  <url>
-    <loc>https://amnaisys.com/ar/case-studies/document-operations.html</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/case-studies/document-operations.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/case-studies/document-operations.html"/>
-  </url>
-  <url>
-    <loc>https://amnaisys.com/ar/case-studies/secure-cloud-modernization.html</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/case-studies/secure-cloud-modernization.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/case-studies/secure-cloud-modernization.html"/>
-  </url>
-  <url>
-    <loc>https://amnaisys.com/ar/case-studies.html</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/case-studies.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/case-studies.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/about.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/about.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/consultation.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/consultation.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/consultation.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/consultation.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/consultation.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/contact.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/contact.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/contact.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/contact.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/index.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/index.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/index.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/index.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/industries/construction-real-estate.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/construction-real-estate.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/construction-real-estate.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/construction-real-estate.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/construction-real-estate.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/industries/hospitality.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/hospitality.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/hospitality.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/hospitality.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/hospitality.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/industries/industrial-manufacturing.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/industrial-manufacturing.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/industrial-manufacturing.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/industrial-manufacturing.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/industrial-manufacturing.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/industries/logistics-supply-chain.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/logistics-supply-chain.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/logistics-supply-chain.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/logistics-supply-chain.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/logistics-supply-chain.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/industries/professional-services.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/professional-services.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/professional-services.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/professional-services.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/professional-services.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/industries/retail-ecommerce.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/retail-ecommerce.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/retail-ecommerce.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/retail-ecommerce.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/retail-ecommerce.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/industries.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/insights/prepare-ai-automation-discovery.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/prepare-ai-automation-discovery.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/prepare-ai-automation-discovery.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/prepare-ai-automation-discovery.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/prepare-ai-automation-discovery.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/insights/secure-enterprise-ai-agent.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/secure-enterprise-ai-agent.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/secure-enterprise-ai-agent.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/secure-enterprise-ai-agent.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/secure-enterprise-ai-agent.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/insights/security-cloud-migration.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/security-cloud-migration.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/security-cloud-migration.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/security-cloud-migration.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/security-cloud-migration.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/insights.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/privacy.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/privacy.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/privacy.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/privacy.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/ai-agents.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/ai-agents.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/ai-agents.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/ai-agents.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/ai-agents.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/ai-automation.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/ai-automation.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/ai-automation.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/ai-automation.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/ai-automation.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/cloud-infrastructure.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/cloud-infrastructure.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/cloud-infrastructure.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/cloud-infrastructure.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/cloud-infrastructure.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/cybersecurity.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/cybersecurity.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/cybersecurity.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/cybersecurity.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/cybersecurity.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/data-engineering.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/data-engineering.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/data-engineering.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/data-engineering.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/data-engineering.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/devops-devsecops.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/devops-devsecops.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/devops-devsecops.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/devops-devsecops.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/devops-devsecops.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/it-consulting-digital-transformation.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/it-consulting-digital-transformation.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/it-consulting-digital-transformation.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/it-consulting-digital-transformation.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/it-consulting-digital-transformation.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/managed-it.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/managed-it.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/managed-it.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/managed-it.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/managed-it.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/network-infrastructure.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/network-infrastructure.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/network-infrastructure.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/network-infrastructure.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/network-infrastructure.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/software-engineering.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/software-engineering.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/software-engineering.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/software-engineering.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/software-engineering.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services/systems-integration.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/systems-integration.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/systems-integration.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/systems-integration.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/systems-integration.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/services.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/ar/terms.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/terms.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/terms.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/terms.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/about.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/about.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/about.html"/>
-  </url>
-  <url>
-    <loc>https://amnaisys.com/en/case-studies/customer-service-automation.html</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/case-studies/customer-service-automation.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/case-studies/customer-service-automation.html"/>
-  </url>
-  <url>
-    <loc>https://amnaisys.com/en/case-studies/document-operations.html</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/case-studies/document-operations.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/case-studies/document-operations.html"/>
-  </url>
-  <url>
-    <loc>https://amnaisys.com/en/case-studies/secure-cloud-modernization.html</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/case-studies/secure-cloud-modernization.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/case-studies/secure-cloud-modernization.html"/>
-  </url>
-  <url>
-    <loc>https://amnaisys.com/en/case-studies.html</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/case-studies.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/case-studies.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/about.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/about.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/consultation.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/consultation.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/consultation.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/consultation.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/consultation.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/contact.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/contact.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/contact.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/contact.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/index.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/index.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/index.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/index.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/index.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/industries/construction-real-estate.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/construction-real-estate.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/construction-real-estate.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/construction-real-estate.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/construction-real-estate.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/industries/hospitality.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/hospitality.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/hospitality.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/hospitality.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/hospitality.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/industries/industrial-manufacturing.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/industrial-manufacturing.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/industrial-manufacturing.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/industrial-manufacturing.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/industrial-manufacturing.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/industries/logistics-supply-chain.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/logistics-supply-chain.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/logistics-supply-chain.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/logistics-supply-chain.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/logistics-supply-chain.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/industries/professional-services.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/professional-services.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/professional-services.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/professional-services.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/professional-services.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/industries/retail-ecommerce.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/retail-ecommerce.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/retail-ecommerce.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries/retail-ecommerce.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries/retail-ecommerce.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/industries.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/industries.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/industries.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/insights/prepare-ai-automation-discovery.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/prepare-ai-automation-discovery.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/prepare-ai-automation-discovery.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/prepare-ai-automation-discovery.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/prepare-ai-automation-discovery.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/insights/secure-enterprise-ai-agent.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/secure-enterprise-ai-agent.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/secure-enterprise-ai-agent.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/secure-enterprise-ai-agent.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/secure-enterprise-ai-agent.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/insights/security-cloud-migration.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/security-cloud-migration.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/security-cloud-migration.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights/security-cloud-migration.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights/security-cloud-migration.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/insights.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/insights.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/insights.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/privacy.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/privacy.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/privacy.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/privacy.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/ai-agents.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/ai-agents.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/ai-agents.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/ai-agents.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/ai-agents.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/ai-automation.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/ai-automation.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/ai-automation.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/ai-automation.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/ai-automation.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/cloud-infrastructure.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/cloud-infrastructure.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/cloud-infrastructure.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/cloud-infrastructure.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/cloud-infrastructure.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/cybersecurity.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/cybersecurity.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/cybersecurity.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/cybersecurity.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/cybersecurity.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/data-engineering.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/data-engineering.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/data-engineering.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/data-engineering.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/data-engineering.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/devops-devsecops.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/devops-devsecops.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/devops-devsecops.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/devops-devsecops.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/devops-devsecops.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/it-consulting-digital-transformation.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/it-consulting-digital-transformation.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/it-consulting-digital-transformation.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/it-consulting-digital-transformation.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/it-consulting-digital-transformation.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/managed-it.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/managed-it.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/managed-it.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/managed-it.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/managed-it.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/network-infrastructure.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/network-infrastructure.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/network-infrastructure.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/network-infrastructure.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/network-infrastructure.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/software-engineering.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/software-engineering.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/software-engineering.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/software-engineering.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/software-engineering.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services/systems-integration.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/systems-integration.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/systems-integration.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services/systems-integration.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services/systems-integration.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/services.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/services.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/services.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
   <url>
     <loc>https://amnaisys.com/en/terms.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/terms.html"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/terms.html"/>
-  </url>
+    <xhtml:link rel="alternate" hreflang="en" href="https://amnaisys.com/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://amnaisys.com/ar/terms.html" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://amnaisys.com/en/index.html" /></url>
 </urlset>

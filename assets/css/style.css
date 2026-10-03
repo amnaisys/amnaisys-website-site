@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0,0");
 
 /* ==========================================================================
    AMNAISYS - Master Design System & Core Stylesheet
@@ -11,7 +10,7 @@
 :root {
   /* Brand Colors */
   --color-gold: #C3A069;
-  --color-green: #008F4E;
+  --color-green: #008F4E; /* Official AMNAISYS brand green: branded headings, action links and visual accents */
   --color-near-black: #171717;
   --color-charcoal-deep: #121816;
   --color-body-neutral: #3F4650;
@@ -59,8 +58,12 @@
   --transition-normal: 0.3s ease-in-out;
 
   /* Canonical component system */
-  --color-gold-text: #9A7641;
-  --color-green-dark: #006C3C;
+  --color-gold-text: #76592F;
+  --color-action-hover-gold: #8B6B3A; /* Accessible metallic-family hover gold for normal-size text actions; preserves brand warmth without the darker editorial #76592F drift */
+  --color-hero-gold: #A97C3B; /* Rich hero-only gold: deeper than metallic #C3A069, readable on dark/image heroes */
+  --color-green-dark: #006C3C; /* Accessible dark green: compact functional text, focus/navigation and white-text controls */
+  --color-brand-label: var(--color-green); /* Hero/section labels on light surfaces: official #008F4E */
+  --color-card-heading-hover: var(--color-green-dark); /* Card heading hover/focus: consistent dark #006C3C */
   --color-green-on-dark: #BFE2CC;
   --type-eyebrow: 0.85rem;
   --type-card-title: 1.25rem;
@@ -101,6 +104,7 @@ html[dir="rtl"] {
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -230,13 +234,13 @@ p {
 }
 
 .btn-primary {
-  background-color: var(--color-green);
+  background-color: var(--color-green-dark);
   color: var(--color-white);
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  background-color: #007540;
+  background-color: #005B32;
 }
 
 .btn-secondary {
@@ -266,7 +270,7 @@ p {
    6. Accessibility & Reduced Motion
    -------------------------------------------------------------------------- */
 :focus-visible {
-  outline: 2px solid var(--color-green);
+  outline: 2px solid var(--color-green-dark);
   outline-offset: 2px;
 }
 
@@ -289,9 +293,7 @@ p {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: var(--color-white);
   border-bottom: 1px solid var(--color-neutral-border);
   height: var(--header-height);
   display: flex;
@@ -356,8 +358,8 @@ p {
 }
 
 .lang-switch:hover {
-  border-color: var(--color-gold);
-  color: var(--color-gold);
+  border-color: var(--color-action-hover-gold);
+  color: var(--color-action-hover-gold);
 }
 
 /* Mobile Nav Toggle Button */
@@ -471,7 +473,7 @@ p {
 
 .footer-col a:hover,
 .footer-col a:focus-visible {
-  color: var(--color-gold);
+  color: var(--color-action-hover-gold);
 }
 
 .footer-bottom {
@@ -786,7 +788,7 @@ html[dir="rtl"] .service-breadcrumbs li:not(:last-child)::after {
 
 .service-breadcrumbs a:hover,
 .service-breadcrumbs a:focus-visible {
-  color: var(--color-green);
+  color: var(--color-green-dark);
 }
 
 .service-hero {
@@ -1339,6 +1341,9 @@ html[dir="rtl"] .closing-cta__eyebrow {
   }
 }
 
+/* Sticky-header fragment navigation is centralized on the document scrollport.
+   Section targets must not carry independent header offsets. */
+
 /* ========================================================================== 
    Services Overview Directory + Global Service Navigation
    Unified service discovery system for EN / AR
@@ -1576,26 +1581,17 @@ html[dir="rtl"] .services-directory-media {
   border-inline-end: 1px solid var(--color-neutral-border);
 }
 
-/* Image-ready placeholder: the dimensions remain stable when real imagery is added later. */
-.services-directory-media::before,
+/* Production service-directory photography. The image itself is a real <img>;
+   a restrained lower fade softens the transition when cards stack on smaller screens. */
+.services-directory-media::before { content: none; }
 .services-directory-media::after {
   content: "";
   position: absolute;
-  inset: -20%;
-  opacity: 0.42;
+  inset: auto 0 0;
+  height: 30%;
+  background: linear-gradient(180deg, rgba(255,255,255,0), rgba(250,249,246,.16));
   pointer-events: none;
-}
-
-.services-directory-media::before {
-  background:
-    linear-gradient(27deg, transparent 49.6%, rgba(195,160,105,.32) 50%, transparent 50.4%),
-    linear-gradient(151deg, transparent 49.6%, rgba(195,160,105,.24) 50%, transparent 50.4%);
-}
-
-.services-directory-media::after {
-  inset: 15% 18%;
-  border: 1px solid rgba(195,160,105,.34);
-  clip-path: polygon(50% 0, 100% 32%, 86% 82%, 43% 100%, 0 66%, 12% 16%);
+  z-index: 1;
 }
 
 .services-directory-media img {
@@ -1603,6 +1599,7 @@ html[dir="rtl"] .services-directory-media {
   height: 100%;
   min-height: 210px;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.3s ease;
 }
 
@@ -2367,7 +2364,8 @@ html[dir="rtl"] .home-who-eyebrow { letter-spacing: 0; }
   margin-bottom: 1.55rem;
 }
 .solution-card-category {
-  color: var(--color-green);
+  color: var(--color-gold-text);
+  transition: none;
   font-size: var(--type-eyebrow);
   font-weight: var(--weight-eyebrow);
   letter-spacing: var(--tracking-eyebrow);
@@ -2388,7 +2386,7 @@ html[dir="rtl"] .solution-card-category { letter-spacing: 0; }
   font-size: 1.55rem;
   transition: transform var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
 }
-.donor-content .scenario-card:nth-child(even) .solution-card-category { color: #9A7641; }
+.donor-content .scenario-card:nth-child(even) .solution-card-category { color: var(--color-gold-text); }
 .donor-content .scenario-card:nth-child(even) .solution-card-icon {
   border-color: rgba(195,160,105,.28);
   background: #FBF7EF;
@@ -2454,7 +2452,7 @@ html[dir="rtl"] .solution-card-category { letter-spacing: 0; }
   .donor-content :is(.scenario-card, .industry-card, .insight-card) .text-link:focus-visible,
   .service-solution-card .service-text-link:hover,
   .service-solution-card .service-text-link:focus-visible {
-    color: var(--color-gold);
+    color: var(--color-action-hover-gold);
     text-decoration: none;
   }
   .home-who-link:hover span,
@@ -2547,7 +2545,6 @@ html[dir="rtl"] .solution-card-category { letter-spacing: 0; }
 /* One architecture / metrics rhythm for every service detail page. */
 .service-assurance-section {
   padding-block: clamp(4rem, 7vw, 5.5rem);
-  scroll-margin-top: 108px;
 }
 .service-assurance-grid {
   gap: clamp(2.25rem, 5vw, 4rem);
@@ -2606,7 +2603,7 @@ html[dir="rtl"] .solution-card-category { letter-spacing: 0; }
   .solution-card-meta { align-items: center; }
   .solution-card-category { max-width: calc(100% - 64px); }
   .donor-content .industry-mark { width: 54px; height: 54px; }
-  .service-assurance-section { padding-block: 3.25rem; scroll-margin-top: 88px; }
+  .service-assurance-section { padding-block: 3.25rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2632,7 +2629,7 @@ html[dir="rtl"] .solution-card-category { letter-spacing: 0; }
 @media (hover: hover) and (pointer: fine) {
   .home-core-link:hover,
   .home-core-link:focus-visible {
-    color: var(--color-gold) !important;
+    color: var(--color-action-hover-gold) !important;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2821,26 +2818,29 @@ html[dir="rtl"] .nav-services-view-all:focus-visible .arrow-icon { transform: sc
 .home-service-card:last-child { grid-column: 4 / span 2; }
 .home-service-media {
   position: relative;
-  min-height: 168px;
+  min-height: 188px;
   overflow: hidden;
   background: #F2EDE4;
   border-bottom: 1px solid var(--color-neutral-border);
 }
-.home-service-media::before,
+.home-service-media::before { content:none; }
 .home-service-media::after {
   content:"";
   position:absolute;
-  inset:-25%;
+  inset:auto 0 0;
+  height:38%;
+  z-index:1;
   pointer-events:none;
-  opacity:.44;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.96));
 }
-.home-service-media::before {
-  background: linear-gradient(32deg, transparent 49.6%, rgba(195,160,105,.30) 50%, transparent 50.4%), linear-gradient(148deg, transparent 49.6%, rgba(0,143,78,.12) 50%, transparent 50.4%);
-}
-.home-service-media::after {
-  inset:20% 23%;
-  border:1px solid rgba(195,160,105,.35);
-  clip-path:polygon(50% 0,100% 31%,88% 81%,45% 100%,0 66%,13% 17%);
+.home-service-media img {
+  width:100%;
+  height:100%;
+  min-height:188px;
+  object-fit:cover;
+  object-position:center;
+  transform:scale(1.001);
+  transition:transform .32s ease;
 }
 .home-service-body {
   position: relative;
@@ -2851,6 +2851,7 @@ html[dir="rtl"] .nav-services-view-all:focus-visible .arrow-icon { transform: sc
 }
 .home-service-icon {
   position: absolute;
+  z-index: 3;
   top: -26px;
   inset-inline-start: 1.35rem;
   display: inline-grid;
@@ -2901,6 +2902,8 @@ html[dir="rtl"] .nav-services-view-all:focus-visible .arrow-icon { transform: sc
     border-color:#D6C8B2;
     box-shadow:0 16px 34px rgba(23,23,23,.085);
   }
+  .home-service-card:hover .home-service-media img,
+  .home-service-card:focus-within .home-service-media img { transform:scale(1.03); }
   .home-service-card:nth-child(odd):hover .home-service-icon,
   .home-service-card:nth-child(odd):focus-within .home-service-icon {
     color:var(--color-gold); border-color:rgba(195,160,105,.38); background:#FFF9EF; transform:translateY(-2px) scale(1.04);
@@ -2909,7 +2912,7 @@ html[dir="rtl"] .nav-services-view-all:focus-visible .arrow-icon { transform: sc
   .home-service-card:nth-child(even):focus-within .home-service-icon {
     color:var(--color-green); border-color:rgba(0,143,78,.28); background:var(--color-soft-green); transform:translateY(-2px) scale(1.04);
   }
-  .home-service-link:hover,.home-service-link:focus-visible { color:var(--color-gold); }
+  .home-service-link:hover,.home-service-link:focus-visible { color:var(--color-action-hover-gold); }
   .home-service-link:hover .arrow-icon,.home-service-link:focus-visible .arrow-icon { transform:translateX(4px); }
   html[dir="rtl"] .home-service-link:hover .arrow-icon,html[dir="rtl"] .home-service-link:focus-visible .arrow-icon { transform:scaleX(-1) translateX(4px); }
 }
@@ -2920,42 +2923,29 @@ html[dir="rtl"] .nav-services-view-all:focus-visible .arrow-icon { transform: sc
   display:grid;
   grid-template-columns:minmax(0,1.42fr) minmax(310px,.78fr);
   gap:clamp(2rem,5vw,4.5rem);
-  align-items:stretch;
+  align-items:start;
 }
 .home-faq-content { min-width:0; }
 .home-faq-content .section-heading { margin-bottom:1.25rem; }
 .home-faq-content .faq-answer { max-width:none; }
 .home-faq-media {
   position:relative;
-  min-height:520px;
+  align-self:start;
+  height:520px;
+  min-height:0;
   overflow:hidden;
   border:1px solid var(--color-neutral-border);
   border-radius:var(--radius-lg);
-  background:linear-gradient(145deg,#F4EEE2,#EEF7F2);
+  background:#F2EDE4;
+  box-shadow:var(--shadow-card-rest);
 }
 .home-faq-media::before,
-.home-faq-media::after {
-  content:"";
-  position:absolute;
-  pointer-events:none;
-}
-.home-faq-media::before {
-  inset:12%;
-  border:1px solid rgba(195,160,105,.38);
-  clip-path:polygon(50% 0,100% 31%,88% 82%,44% 100%,0 66%,12% 17%);
-}
-.home-faq-media::after {
-  inset:0;
-  background:linear-gradient(35deg,transparent 49.7%,rgba(195,160,105,.22) 50%,transparent 50.3%),linear-gradient(145deg,transparent 49.7%,rgba(0,143,78,.10) 50%,transparent 50.3%);
-}
-.home-faq-media > .material-symbols-rounded {
-  position:absolute;
-  z-index:2;
-  inset:50% auto auto 50%;
-  transform:translate(-50%,-50%);
-  color:var(--color-green);
-  font-size:4rem;
-  opacity:.75;
+.home-faq-media::after { content:none; }
+.home-faq-media img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
 }
 
 /* Insights metadata hierarchy. */
@@ -2966,7 +2956,7 @@ html[dir="rtl"] .nav-services-view-all:focus-visible .arrow-icon { transform: sc
   .home-services-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .home-service-card,.home-service-card:nth-last-child(2),.home-service-card:last-child { grid-column:auto; }
   .home-faq-grid { grid-template-columns:1fr; }
-  .home-faq-media { min-height:320px; }
+  .home-faq-media { height:320px; min-height:0; }
 }
 @media (max-width:760px) {
   .closing-cta,.donor-content .closing-cta { min-height:0; padding:2rem 1.25rem; gap:1.4rem; }
@@ -3004,7 +2994,7 @@ html[dir="rtl"] :is(.service-kicker,.service-eyebrow,.home-who-eyebrow,.solution
 html[dir="rtl"] .donor-content .eyebrow {
   letter-spacing: 0;
 }
-.solution-card-category { color: var(--color-green); }
+.solution-card-category { color: var(--color-gold-text); }
 .donor-content .scenario-card:nth-child(even) .solution-card-category { color: var(--color-gold-text); }
 .closing-cta__eyebrow,
 .donor-content .closing-cta__eyebrow { color: var(--color-green-on-dark); }
@@ -3093,7 +3083,6 @@ html[dir="rtl"] h4 { line-height: 1.35; }
 .home-who-link,
 .home-service-link,
 .home-core-link,
-.nav-services-view-all,
 .services-directory-detail,
 .contact-channel-link {
   display: inline-flex;
@@ -3206,7 +3195,7 @@ html[dir="rtl"] .services-lifecycle-card > span { letter-spacing: 0; }
   .home-service-link:hover,
   .home-service-link:focus-visible,
   .home-core-link:hover,
-  .home-core-link:focus-visible { color: var(--color-gold-text); }
+  .home-core-link:focus-visible { color: var(--color-action-hover-gold); }
 }
 
 @media (max-width: 760px) {
@@ -3233,13 +3222,13 @@ html[dir="rtl"] .services-lifecycle-card > span { letter-spacing: 0; }
 /* Recurring former inline styles promoted to shared components. */
 .form-label { display:block; margin-bottom:.5rem; font-size:.9rem; font-weight:600; color:var(--color-near-black); }
 .form-control { width:100%; min-height:var(--control-height); padding:.75rem 1rem; border:1px solid var(--color-neutral-border); border-radius:var(--radius-md); background:var(--color-white); color:var(--color-near-black); font-family:inherit; }
-.form-control:focus { border-color:var(--color-green); outline:2px solid rgba(0,143,78,.12); outline-offset:1px; }
+.form-control:focus { border-color:var(--color-green-dark); outline:2px solid rgba(0,143,78,.12); outline-offset:1px; }
 .contact-channel-card { padding:var(--card-padding-compact); border:1px solid var(--color-neutral-border); border-radius:var(--card-radius); background:var(--color-white); }
 .contact-channel-link { color:var(--color-near-black); text-decoration:none; font-size:1.05rem; font-weight:600; }
-.contact-channel-link:hover,.contact-channel-link:focus-visible { color:var(--color-green); }
+.contact-channel-link:hover,.contact-channel-link:focus-visible { color:var(--color-green-dark); }
 .legal-section-heading { margin-top:2rem; margin-bottom:1rem; font-size:1.5rem; line-height:1.35; }
 
-.hero-pill { display:inline-block; width:fit-content; margin-bottom:1rem; padding:0; border:0; border-radius:0; background:transparent; color:var(--color-green-dark); font-size:var(--type-eyebrow); font-weight:var(--weight-eyebrow); line-height:1.4; letter-spacing:var(--tracking-eyebrow); text-transform:uppercase; }
+.hero-pill { display:inline-block; width:fit-content; margin-bottom:1rem; padding:0; border:0; border-radius:0; background:transparent; color:var(--color-brand-label); font-size:var(--type-eyebrow); font-weight:var(--weight-eyebrow); line-height:1.4; letter-spacing:var(--tracking-eyebrow); text-transform:uppercase; }
 html[dir="rtl"] .hero-pill { letter-spacing:0; text-transform:none; }
 
 /* ========================================================================
@@ -3259,7 +3248,7 @@ html[dir="rtl"] .hero-pill { letter-spacing:0; text-transform:none; }
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: var(--color-green-dark);
+  color: var(--color-brand-label);
   font-size: var(--type-eyebrow);
   font-weight: var(--weight-eyebrow);
   line-height: 1.4;
@@ -3278,7 +3267,7 @@ html[dir="rtl"] .hero-pill { letter-spacing:0; text-transform:none; }
 .service-eyebrow,
 .solution-card-category,
 .donor-content .eyebrow {
-  color: var(--color-green-dark);
+  color: var(--color-brand-label);
   font-size: var(--type-eyebrow);
   font-weight: var(--weight-eyebrow);
   line-height: 1.4;
@@ -3301,7 +3290,7 @@ html[dir="rtl"] .donor-content .eyebrow {
 /* Services directory: number + title use the approved brand green. */
 .services-directory-index,
 .services-directory-heading h2 {
-  color: var(--color-green-dark);
+  color: var(--color-green);
 }
 
 /* Approved green top-line interaction for service cards. */
@@ -3327,20 +3316,21 @@ html[dir="rtl"] .home-service-card::before { transform-origin: right center; }
 
 /* Preserve the restrained hover interactions without recoloring resting
    headings. All resting headings inherit the original near-black/white rules. */
-.donor-content .industry-card h3,
+/* Directory cards use semantic h2 while Homepage cards use h3. Keep the
+   visual card-title/interaction contract independent of heading level. */
+.donor-content .industry-card :is(h2, h3),
 .donor-content .method-step h3,
 .service-capability-card h3,
 .service-outcome-card h3,
-.service-delivery-step h3,
-.service-solution-card h3 {
+.service-delivery-step h3 {
   transition: color var(--transition-fast);
 }
 .donor-content .method-step {
   transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
 @media (hover:hover) and (pointer:fine) {
-  .donor-content .industry-card:hover h3,
-  .donor-content .industry-card:focus-within h3,
+  .donor-content .industry-card:hover :is(h2, h3),
+  .donor-content .industry-card:focus-within :is(h2, h3),
   .donor-content .method-step:hover h3,
   .donor-content .method-step:focus-within h3,
   .service-capability-card:hover h3,
@@ -3348,10 +3338,8 @@ html[dir="rtl"] .home-service-card::before { transform-origin: right center; }
   .service-outcomes-section .service-outcome-card:hover h3,
   .service-outcomes-section .service-outcome-card:focus-within h3,
   .service-delivery-step:hover h3,
-  .service-delivery-step:focus-within h3,
-  .service-solution-card:hover h3,
-  .service-solution-card:focus-within h3 {
-    color: var(--color-green-dark);
+  .service-delivery-step:focus-within h3 {
+    color: var(--color-card-heading-hover);
   }
   .donor-content .method-step:hover,
   .donor-content .method-step:focus-within {
@@ -3441,7 +3429,7 @@ html[dir="rtl"] .home-service-card::before { transform-origin: right center; }
   .service-outcome-card h3,
   .service-solution-card h3,
   .service-delivery-step h3,
-  .industry-card h3 {
+  .industry-card :is(h2, h3) {
     transition: none !important;
     transform: none !important;
   }
@@ -3475,7 +3463,7 @@ html[dir="rtl"] .home-service-card::before { transform-origin: right center; }
   border: 1px solid rgba(0,143,78,.22);
   border-radius: 12px;
   background: var(--color-soft-green);
-  color: var(--color-green-dark);
+  color: var(--color-green);
   transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
 }
 .header-whatsapp-svg { width: 21px; height: 21px; }
@@ -3560,7 +3548,7 @@ html[dir="rtl"] .home-service-card::before { transform-origin: right center; }
     border-radius: 8px;
     font-size: 1.45rem;
     line-height: 1;
-    color: var(--color-green-dark);
+    color: var(--color-green);
     transition: transform var(--transition-fast), background-color var(--transition-fast);
   }
   .nav-services-mobile-toggle[aria-expanded="true"] {
@@ -3853,7 +3841,7 @@ html[dir="rtl"] .about-identity-code { letter-spacing: .03em; }
   margin-top:1rem;
   padding-top:1rem;
   border-top:1px solid rgba(255,255,255,.08);
-  color:#9FB0B9;
+  color:#B0BEC5;
   font-size:.84rem;
   line-height:1.65;
 }
@@ -3878,16 +3866,20 @@ html[dir="rtl"] .about-identity-code { letter-spacing: .03em; }
    numbering, footer contact states and typographic action arrows.
    ======================================================================== */
 
-/* One brand-label contract on light surfaces. Gold remains an accent rather
-   than a section-label or heading default. */
+/* One brand-label contract on light surfaces. Applied Solution card
+   categories are the deliberate dark-gold exception defined below. */
+.hero-pill,
 .eyebrow,
 .section-eyebrow,
 .service-eyebrow,
 .service-kicker,
 .home-who-eyebrow,
-.services-overview-eyebrow,
+.services-overview-eyebrow {
+  color: var(--color-brand-label) !important;
+}
 .solution-card-category {
-  color: var(--color-green) !important;
+  color: var(--color-gold-text) !important;
+  transition: none !important;
 }
 .section-eyebrow {
   display: inline-block;
@@ -3898,7 +3890,7 @@ html[dir="rtl"] .about-identity-code { letter-spacing: .03em; }
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
 }
-.home-who-section .eyebrow { color: var(--color-green) !important; }
+.home-who-section .eyebrow { color: var(--color-brand-label) !important; }
 html[dir="rtl"] .section-eyebrow { letter-spacing: 0; text-transform: none; }
 
 /* Material Symbols can now carry a deliberate bold enterprise weight. */
@@ -3991,6 +3983,22 @@ html[dir="rtl"] .section-eyebrow { letter-spacing: 0; text-transform: none; }
   }
 }
 
+/* Applied Solutions cards: category stays static dark gold, icons stay official
+   brand green, and only the actual card heading transitions to the shared dark
+   card-hover green (#006C3C), matching Industry and other card families. */
+.donor-content .scenario-card :is(h2, h3),
+.service-solution-card h3 {
+  transition: color var(--transition-fast);
+}
+@media (hover:hover) and (pointer:fine) {
+  .donor-content .scenario-card:hover :is(h2, h3),
+  .donor-content .scenario-card:focus-within :is(h2, h3),
+  .service-solution-card:hover h3,
+  .service-solution-card:focus-within h3 {
+    color: var(--color-card-heading-hover);
+  }
+}
+
 /* Service Applied Solution cards: same card interaction family, semantic icon
    at inline-end of the heading, and the site's normal lightweight action link. */
 .service-solution-card {
@@ -4020,7 +4028,7 @@ html[dir="rtl"] .section-eyebrow { letter-spacing: 0; text-transform: none; }
   }
   .service-solution-card .service-text-link:hover,
   .service-solution-card .service-text-link:focus-visible {
-    color: var(--color-gold) !important;
+    color: var(--color-action-hover-gold) !important;
   }
 }
 
@@ -4155,14 +4163,14 @@ html[dir="rtl"] .services-lifecycle-card > span { letter-spacing: 0; }
   }
   .services-lifecycle-card:hover h3,
   .services-lifecycle-card:focus-within h3 {
-    color: var(--color-green-dark);
+    color: var(--color-card-heading-hover);
   }
 }
 
 /* Footer phone and WhatsApp follow the same gold hover state as footer links. */
 @media (hover:hover) and (pointer:fine) {
   .footer-contact-link:hover,
-  .footer-contact-link:focus-visible { color: var(--color-gold) !important; }
+  .footer-contact-link:focus-visible { color: var(--color-action-hover-gold) !important; }
 }
 
 @media (max-width: 620px) {
@@ -4177,6 +4185,8 @@ html[dir="rtl"] .services-lifecycle-card > span { letter-spacing: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .service-capability-icon,
+  .donor-content .scenario-card h3,
+  .service-solution-card h3,
   .service-solution-card,
   .service-solution-icon,
   .home-who-icon--plain,
@@ -4312,7 +4322,7 @@ form input::placeholder { color: #7D7A74; opacity: .72; }
 .form-privacy { font-size: .8rem; color: var(--color-body-neutral); margin-bottom: 1.5rem; }
 .form-privacy a,
 .donor-content .form-privacy a {
-  color: var(--color-green) !important;
+  color: var(--color-green-dark) !important;
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
@@ -4333,3 +4343,803 @@ form input::placeholder { color: #7D7A74; opacity: .72; }
   box-sizing: border-box;
   resize: vertical;
 }
+
+
+/* Approved 2026-10-01 homepage narrative-order + footer tone harmonization (v17). */
+.home-industries-section { background: var(--color-white); }
+/* Kingdom section now participates in the donor narrative wrapper; preserve the
+   production primary-button foreground against the donor anchor reset. */
+.donor-content .home-kingdom-section .btn-primary,
+.donor-content .home-kingdom-section .btn-primary:hover,
+.donor-content .home-kingdom-section .btn-primary:focus-visible {
+  color: var(--color-white);
+}
+
+
+/* ========================================================================== 
+   Approved 2026-10-01 navigation / industries / FAQ / motion repair (v18)
+   Shared systems only: no page-specific positioning hacks.
+   ========================================================================== */
+
+/* Industries mirrors the proven Services discovery pattern on desktop and in
+   the compact navigation drawer. */
+.nav-industries { position: relative; }
+.nav-industries-link { white-space: nowrap; }
+.nav-industries-menu {
+  position: absolute;
+  z-index: 1120;
+  top: 100%;
+  inset-inline-start: 50%;
+  width: min(680px, calc(100vw - 2rem));
+  padding: .85rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-neutral-border);
+  border-top: 3px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  box-shadow: 0 18px 44px rgba(18,24,22,.13);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%,-.35rem);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+}
+html[dir="rtl"] .nav-industries-menu { transform: translate(50%,-.35rem); }
+.nav-industries:hover > .nav-industries-menu,
+.nav-industries:focus-within > .nav-industries-menu,
+.nav-industries.is-open > .nav-industries-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%,0);
+}
+html[dir="rtl"] .nav-industries:hover > .nav-industries-menu,
+html[dir="rtl"] .nav-industries:focus-within > .nav-industries-menu,
+html[dir="rtl"] .nav-industries.is-open > .nav-industries-menu { transform: translate(50%,0); }
+.nav-industries-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: .2rem .65rem;
+}
+.nav-industry-link {
+  display: block;
+  padding: .62rem .7rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-body-neutral);
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.nav-industry-link:hover,
+.nav-industry-link:focus-visible,
+.nav-industry-link.active {
+  color: var(--color-green);
+  background: var(--color-soft-green);
+}
+.nav-industries-view-all {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: .65rem;
+  padding: .72rem .75rem .15rem;
+  border-top: 1px solid var(--color-neutral-border);
+  color: var(--color-near-black);
+  font-size: .88rem;
+  font-weight: 700;
+}
+.nav-industries-view-all:hover,
+.nav-industries-view-all:focus-visible { color: var(--color-green); }
+.nav-industries-mobile-toggle { display:none; border:0; background:transparent; color:var(--color-green); cursor:pointer; }
+.nav-disclosure-toggle-icon {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+.nav-disclosure-toggle-icon::before,
+.nav-disclosure-toggle-icon::after {
+  content:"";
+  position:absolute;
+  inset:50% auto auto 50%;
+  width:14px;
+  height:2px;
+  border-radius:999px;
+  background:currentColor;
+  transform:translate(-50%,-50%);
+  transition:transform var(--transition-fast), opacity var(--transition-fast);
+}
+.nav-disclosure-toggle-icon::after { transform:translate(-50%,-50%) rotate(90deg); }
+.nav-industries-mobile-toggle[aria-expanded="true"] { background:var(--color-soft-green); }
+.nav-industries-mobile-toggle[aria-expanded="true"] .nav-disclosure-toggle-icon::after { opacity:0; transform:translate(-50%,-50%) rotate(0); }
+
+@media (max-width:1080px) {
+  .nav-industries {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 44px;
+    align-items:center;
+    width:100%;
+  }
+  .nav-industries-link { grid-column:1; width:100%; }
+  .nav-industries-mobile-toggle {
+    display:inline-flex;
+    grid-column:2;
+    grid-row:1;
+    width:42px;
+    height:42px;
+    align-items:center;
+    justify-content:center;
+    justify-self:end;
+    border-radius:8px;
+    color:var(--color-green);
+    transition:background-color var(--transition-fast);
+  }
+  .nav-industries-menu,
+  html[dir="rtl"] .nav-industries-menu {
+    grid-column:1 / -1;
+    display:block;
+    position:static;
+    width:100%;
+    max-height:0;
+    overflow:hidden;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+    background:transparent;
+    opacity:1;
+    visibility:visible;
+    pointer-events:none;
+    transform:none !important;
+    transition:max-height .3s ease, padding .3s ease;
+  }
+  .nav-industries.is-mobile-open > .nav-industries-menu,
+  html[dir="rtl"] .nav-industries.is-mobile-open > .nav-industries-menu {
+    max-height:520px;
+    padding:.35rem 0 .2rem .8rem;
+    pointer-events:auto;
+  }
+  html[dir="rtl"] .nav-industries.is-mobile-open > .nav-industries-menu { padding:.35rem .8rem .2rem 0; }
+  .nav-industries-grid { grid-template-columns:1fr; gap:0; }
+  .nav-industry-link {
+    padding:.55rem .65rem;
+    font-size:.96rem;
+    border-bottom:1px solid var(--color-soft-sand);
+  }
+  .nav-industries-view-all { display:none; }
+  .nav-menu:not(.is-active) .nav-industries-menu { pointer-events:none !important; }
+}
+
+/* Industry directory and detail pages use deliberate alternating surfaces so
+   adjacent sections do not visually merge. */
+.donor-content .industries-directory-section { background:var(--color-soft-green); }
+.donor-content .industries-directory-section .industry-card { background:var(--color-white); }
+.donor-content .industry-priorities-section { background:var(--color-white); }
+
+/* Homepage FAQ visual has an independent height. Grid expansion on the FAQ
+   column can no longer stretch the visual panel. */
+.home-faq-grid { align-items:start; }
+.home-faq-media { align-self:start; }
+
+/* Saudi Vision 2030 panel: restrained branded interaction rather than another
+   generic card animation. */
+.about-vision-panel {
+  position:relative;
+  overflow:hidden;
+  transition:transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.about-vision-panel::after {
+  content:"";
+  position:absolute;
+  width:220px;
+  height:220px;
+  inset-block-start:-118px;
+  inset-inline-end:-88px;
+  border:1px solid rgba(195,160,105,.26);
+  transform:rotate(35deg);
+  pointer-events:none;
+}
+.about-vision-kicker { display:flex; align-items:center; gap:.7rem; position:relative; z-index:1; }
+.about-vision-kicker .eyebrow { margin:0; }
+.about-vision-icon {
+  color:var(--color-green-dark);
+  --material-symbol-size:1.8rem;
+  transition:transform var(--transition-fast), color var(--transition-fast);
+}
+.about-vision-panel h2,
+.about-vision-panel > p:last-child { position:relative; z-index:1; }
+@media (hover:hover) and (pointer:fine) {
+  .about-vision-panel:hover,
+  .about-vision-panel:focus-within {
+    transform:translateY(-3px);
+    border-color:rgba(0,143,78,.32);
+    box-shadow:var(--shadow-card-hover);
+  }
+  .about-vision-panel:hover .about-vision-icon,
+  .about-vision-panel:focus-within .about-vision-icon {
+    color:var(--color-gold-text);
+    transform:translateY(-2px);
+  }
+}
+
+/* Restrained magnetic conversion controls. JS only updates the two variables;
+   touch and reduced-motion environments retain normal static buttons. */
+.magnetic-cta {
+  --mag-x:0px;
+  --mag-y:0px;
+  transform:translate3d(var(--mag-x),var(--mag-y),0);
+  transition:transform .16s ease-out, box-shadow var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  will-change:transform;
+}
+@media (hover:hover) and (pointer:fine) {
+  .magnetic-cta:hover { box-shadow:0 9px 22px rgba(0,0,0,.14); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .magnetic-cta { transform:none !important; transition:none !important; will-change:auto; }
+  .nav-disclosure-toggle-icon::before,
+  .nav-disclosure-toggle-icon::after,
+  .nav-industries-menu,
+  .nav-industries-mobile-toggle,
+  .about-vision-panel,
+  .about-vision-icon { transition:none !important; transform:none !important; }
+}
+
+/* Magnetic header WhatsApp owns its transform while retaining the approved
+   background/color/shadow hover treatment. */
+@media (hover:hover) and (pointer:fine) {
+  .header-whatsapp-icon.magnetic-cta:hover,
+  .header-whatsapp-icon.magnetic-cta:focus-visible {
+    transform: translate3d(var(--mag-x),var(--mag-y),0);
+  }
+}
+
+
+/* ==========================================================================
+   Final production hardening — 2026-10-01 (v20)
+   Accessibility, forms, responsive, Arabic/BiDi and deployment-safe utilities.
+   ========================================================================== */
+.skip-link-global {
+  position: fixed;
+  inset-block-start: 10px;
+  inset-inline-start: 10px;
+  z-index: 3000;
+  padding: .7rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-near-black);
+  color: var(--color-white);
+  font-weight: 700;
+  transform: translateY(-180%);
+  transition: transform var(--transition-fast);
+}
+.skip-link-global:focus { transform: translateY(0); }
+
+.footer-heading {
+  color: var(--color-white);
+  font-size: 1.05rem;
+  font-weight: var(--weight-heading);
+  line-height: 1.35;
+  margin: 0 0 var(--spacing-md);
+}
+.footer-col h4 { display:none; }
+
+.contact-layout-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3.5rem;
+  align-items: start;
+}
+@media (max-width: 780px) {
+  .contact-layout-grid { grid-template-columns: minmax(0,1fr); gap: 2rem; }
+}
+.form-submit-full { width:100%; justify-content:center; }
+
+/* Header navigation is a brand-facing surface: restore the official AMNAISYS
+   #008F4E interaction green. Compact legal/form links keep the darker token
+   where small-text contrast is the primary requirement. */
+.nav-link.active,
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-service-link:hover,
+.nav-service-link:focus-visible,
+.nav-industry-link:hover,
+.nav-industry-link:focus-visible,
+.nav-services-view-all:hover,
+.nav-services-view-all:focus-visible,
+.nav-industries-view-all:hover,
+.nav-industries-view-all:focus-visible { color: var(--color-green) !important; }
+
+.form-privacy a,
+.donor-content .form-privacy a { color: var(--color-green-dark) !important; }
+
+/* Header conversion controls use the official brand green. Other primary
+   controls retain the audited darker fill unless their component says otherwise. */
+.site-header .header-cta {
+  background-color: var(--color-green);
+  border-color: var(--color-green);
+  color: var(--color-white);
+}
+.site-header .header-cta:hover,
+.site-header .header-cta:focus-visible {
+  background-color: #007540;
+  border-color: #007540;
+  color: var(--color-white);
+}
+.header-whatsapp-icon:hover,
+.header-whatsapp-icon:focus-visible {
+  background-color: var(--color-green);
+  border-color: var(--color-green);
+  color: var(--color-white);
+}
+
+.btn-primary,
+.services-directory-whatsapp:hover,
+.services-directory-whatsapp:focus-visible {
+  background-color: var(--color-green-dark);
+  border-color: var(--color-green-dark);
+  color: var(--color-white);
+}
+
+.form-status-live {
+  min-height: 1.2em;
+  margin-top: .75rem;
+  color: var(--color-body-neutral);
+  font-size: .85rem;
+}
+form.is-submitting button[type="submit"] { cursor: wait; opacity: .82; }
+
+/* Inert is applied by JavaScript while the compact navigation drawer is open. */
+body.nav-open { overflow: hidden; }
+@media (min-width:1081px) { body.nav-open { overflow:auto; } }
+
+
+/* Approved spacing, selection, form-honeypot and Arabic BiDi repair — 2026-10-01 (v21) */
+
+/* One selection treatment across original + donor page families. */
+::selection {
+  background: var(--color-green-dark);
+  color: var(--color-white);
+}
+::-moz-selection {
+  background: var(--color-green-dark);
+  color: var(--color-white);
+}
+
+/* Honeypot is a functional anti-spam field, never a visible form control. */
+.hp-field {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* About was reconstructed outside .donor-content, so its section-heading
+   instances need the same deliberate eyebrow -> title -> content rhythm. */
+:is(.about-mission-section,.about-differentiators-section,.about-engineering-section) .section-heading {
+  display: block;
+  max-width: 900px;
+  margin: 0 0 1.5rem;
+}
+:is(.about-mission-section,.about-differentiators-section,.about-engineering-section) .section-heading__title .eyebrow {
+  margin: 0 0 .5rem;
+}
+:is(.about-mission-section,.about-differentiators-section,.about-engineering-section) .section-heading__title h2 {
+  margin: 0;
+}
+
+/* Tighten only the About card stacks that contain an extra icon/eyebrow tier.
+   The Homepage Who We Are card spacing already matches the canonical service
+   card rhythm, so it remains unchanged. */
+.about-feature-icon { margin-bottom: .8rem; }
+.about-mission-card .eyebrow { margin: 0 0 .4rem; }
+.about-mission-card h3 { margin: 0 0 .6rem; }
+.about-engineering-step > .material-symbols-rounded { margin-bottom: .9rem; }
+
+/* Built for the Kingdom previously combined an eyebrow margin with an inline
+   h2 top margin. The heading now follows the standard single-gap contract. */
+.home-kingdom-title { margin: 0 0 var(--spacing-sm); }
+
+/* Arabic numeric/BiDi production contract — 2026-10-03 (v30)
+   Arabic prose remains RTL. Arabic-Indic numerals, dates, percentages,
+   ranges and years retain their natural LTR numeric order inside isolated
+   runs. No digit string is reversed and no RTL override is used. */
+html[dir="rtl"] .numeric-token {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Formatted telephone numbers need stronger determinism because plus signs
+   and spaces are neutral BiDi characters. The visible number is composed as
+   explicit LTR flex groups, while tel:/WhatsApp machine values remain ASCII. */
+html[dir="rtl"] .phone-number-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: .32em;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+html[dir="rtl"] .phone-number-ltr > span {
+  direction: ltr;
+  unicode-bidi: isolate-override;
+  display: inline-block;
+}
+html[dir="rtl"] .phone-prefix-ltr {
+  direction: ltr;
+  unicode-bidi: isolate-override;
+  display: inline-block;
+  white-space: nowrap;
+}
+html[dir="rtl"] .contact-phone-number {
+  color: var(--color-near-black);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Telephone entry is logical LTR data entry but stays visually anchored to
+   the right edge of the Arabic form. This avoids hidden override controls. */
+html[dir="rtl"] .phone-input-ltr {
+  direction: ltr;
+  text-align: right;
+}
+
+/* Arabic phone example hint — v32
+   Native placeholders containing Arabic-Indic digits plus neutral spaces can
+   still be reordered by the Unicode BiDi algorithm even inside an LTR input.
+   The visual hint is therefore composed as explicit LTR groups above a blank
+   native placeholder. It is decorative only and disappears as soon as the
+   user enters a value; actual input data remains a normal LTR tel control. */
+html[dir="rtl"] .phone-input-shell {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+html[dir="rtl"] .phone-placeholder-visual {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  display: inline-flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: .32em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  color: #7D7A74;
+  opacity: .72;
+  font: inherit;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+html[dir="rtl"] .phone-placeholder-visual > span {
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate-override;
+}
+html[dir="rtl"] .phone-input-shell .phone-input-ltr:not(:placeholder-shown) + .phone-placeholder-visual {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
+/* ==========================================================================
+   Production image integration system — 2026-10-03 (v27)
+   Two deliberate hero families:
+   A) full photographic heroes for Home / About / Services / Contact;
+   B) split desktop + photographic mobile-overlay heroes for detail directories.
+   Critical hero imagery is real <picture>/<img> markup so the browser discovers
+   it early; lower-page/card imagery remains lazy-loaded in HTML.
+   ========================================================================== */
+
+/* Family A — full photographic centered heroes. */
+.media-background-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  min-height: clamp(470px, 36vw, 590px);
+  padding-block: clamp(4.25rem, 7vw, 6.5rem);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(227,222,211,.62);
+  background: var(--color-charcoal-deep);
+}
+.media-background-hero__media,
+.media-background-hero__scrim {
+  position: absolute;
+  inset: 0;
+}
+.media-background-hero__media { z-index: -2; width: 100%; height: 100%; }
+.media-background-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.media-background-hero__scrim {
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(7,21,16,.78) 0%, rgba(10,30,22,.60) 50%, rgba(6,20,15,.72) 100%),
+    linear-gradient(180deg, rgba(8,14,11,.10) 0%, rgba(8,14,11,.34) 100%);
+}
+.media-background-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin-inline: auto;
+  text-align: center;
+}
+.media-background-hero h1 { color: var(--color-hero-gold); text-shadow: 0 2px 18px rgba(0,0,0,.22); }
+.media-background-hero__content > p:not(.eyebrow),
+.media-background-hero .about-hero__lede,
+.media-background-hero .services-overview-hero__inner > p:last-child {
+  color: rgba(255,255,255,.88);
+  font-size: var(--type-lead);
+  line-height: 1.72;
+}
+.media-background-hero .hero-pill,
+.media-background-hero .eyebrow,
+.media-background-hero .services-overview-eyebrow {
+  color: var(--color-green-on-dark) !important;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.media-background-hero .hero-pill,
+.media-background-hero .services-overview-eyebrow { margin-bottom: 1rem; }
+.media-background-hero .media-background-hero__actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.media-background-hero .btn-secondary {
+  border-color: rgba(255,255,255,.78);
+  color: var(--color-white);
+  background: rgba(9,24,18,.18);
+}
+.media-background-hero .btn-secondary:hover,
+.media-background-hero .btn-secondary:focus-visible {
+  border-color: var(--color-gold);
+  background: var(--color-gold);
+  color: var(--color-near-black);
+}
+.home-photo-hero h1,
+.contact-photo-hero h1 { margin-bottom: 1.25rem; }
+.home-photo-hero .media-background-hero__content > p,
+.contact-photo-hero .media-background-hero__content > p { max-width: 850px; margin-inline: auto; }
+.about-photo-hero .about-hero__inner,
+.services-photo-hero .services-overview-hero__inner { max-width: 930px; }
+
+/* The Home hero naturally resolves to ~538px around the common 1366–1440px
+   desktop range because it carries an action row. Raise the shared desktop
+   floor to that same approved rhythm so About / Services / Contact no longer
+   collapse shorter, while content can still grow safely (not a fixed height). */
+@media (min-width: 1024px) {
+  .media-background-hero { min-height: clamp(538px, 36vw, 590px); }
+}
+
+/* Family B1 — individual service split hero on desktop. */
+.service-hero--media {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(3rem,5vw,4.5rem);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 91% 88%, rgba(0,143,78,.20) 0%, rgba(0,143,78,.08) 28%, transparent 53%),
+    linear-gradient(100deg, #071510 0%, #0A261A 56%, #123F2D 100%);
+}
+html[dir="rtl"] .service-hero--media {
+  background:
+    radial-gradient(circle at 9% 88%, rgba(0,143,78,.20) 0%, rgba(0,143,78,.08) 28%, transparent 53%),
+    linear-gradient(260deg, #071510 0%, #0A261A 56%, #123F2D 100%);
+}
+.service-hero--media .service-hero-inner {
+  max-width: var(--container-max-width);
+  display: grid;
+  grid-template-columns: minmax(0,1.03fr) minmax(390px,.97fr);
+  gap: clamp(2.5rem,5vw,5rem);
+  align-items: start;
+  text-align: start;
+}
+.service-hero-copy { min-width: 0; }
+.service-hero--media .service-kicker {
+  margin-bottom: 1rem;
+  color: var(--color-green-on-dark) !important;
+}
+.service-hero--media h1 {
+  max-width: 760px;
+  margin: 0 0 1.15rem;
+  color: var(--color-hero-gold);
+  text-shadow: 0 2px 16px rgba(0,0,0,.20);
+}
+.service-hero--media .service-hero-lede {
+  max-width: 730px;
+  margin: 0 0 1.75rem;
+  color: rgba(255,255,255,.88);
+}
+.service-hero--media .service-hero-actions { justify-content: flex-start; }
+.service-hero--media .btn-secondary {
+  border-color: rgba(255,255,255,.76);
+  color: var(--color-white);
+  background: rgba(8,20,15,.20);
+}
+.service-hero--media .btn-secondary:hover,
+.service-hero--media .btn-secondary:focus-visible {
+  border-color: var(--color-gold);
+  background: var(--color-gold);
+  color: var(--color-near-black);
+}
+.service-hero-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid rgba(195,160,105,.68);
+  border-radius: 18px;
+  background: #EAE4D8;
+  box-shadow:
+    0 22px 52px rgba(0,0,0,.30),
+    0 0 34px rgba(0,143,78,.12);
+}
+.service-hero-media img { width:100%; height:100%; object-fit:cover; object-position:center; }
+html[dir="rtl"] .service-hero--media .service-hero-actions { justify-content:flex-start; }
+
+/* Real service-card image assets replace the former geometric placeholders. */
+.home-service-media,
+.services-directory-media { background-color:#EAE4D8; }
+
+/* FAQ portrait stays independently sized so opening accordions cannot stretch it. */
+.home-faq-media img { transform: translateZ(0); }
+
+@media (max-width: 760px) {
+  .media-background-hero {
+    min-height: clamp(500px, 125vw, 650px);
+    padding-block: clamp(4rem,15vw,6rem);
+  }
+  .media-background-hero__scrim {
+    background:
+      linear-gradient(90deg, rgba(5,18,13,.84) 0%, rgba(8,26,18,.68) 52%, rgba(5,17,12,.76) 100%),
+      linear-gradient(180deg, rgba(5,12,9,.10), rgba(5,12,9,.38));
+  }
+  .media-background-hero__content { padding-inline: .25rem; }
+  .media-background-hero__content > p:not(.eyebrow),
+  .media-background-hero .about-hero__lede,
+  .media-background-hero .services-overview-hero__inner > p:last-child { font-size: 1.02rem; line-height: 1.7; }
+
+  .service-hero--media {
+    min-height: clamp(520px, 136vw, 670px);
+    padding-block: clamp(3.75rem,13vw,5.5rem);
+    background: var(--color-charcoal-deep);
+  }
+  .service-hero--media::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg, rgba(5,23,16,.87) 0%, rgba(6,31,20,.70) 56%, rgba(5,19,14,.50) 100%),
+      linear-gradient(180deg, rgba(4,12,9,.06), rgba(4,12,9,.34));
+  }
+  html[dir="rtl"] .service-hero--media::after {
+    background:
+      linear-gradient(270deg, rgba(5,23,16,.87) 0%, rgba(6,31,20,.70) 56%, rgba(5,19,14,.50) 100%),
+      linear-gradient(180deg, rgba(4,12,9,.06), rgba(4,12,9,.34));
+  }
+  .service-hero--media .service-hero-inner { display:block; max-width:var(--container-max-width); text-align:start; }
+  .service-hero-copy { position:relative; z-index:2; max-width:680px; }
+  .service-hero-media {
+    position:absolute;
+    inset:0;
+    z-index:0;
+    width:100%;
+    height:100%;
+    aspect-ratio:auto;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+  }
+  .service-hero-media img { width:100%; height:100%; object-fit:cover; filter:saturate(.94); }
+  .service-hero--media .service-kicker {
+    padding:0;
+    border:0;
+    background:transparent;
+    color:var(--color-green-on-dark);
+  }
+  .service-hero--media h1 { color:var(--color-hero-gold); text-shadow:0 2px 16px rgba(0,0,0,.24); }
+  .service-hero--media .service-hero-lede { color:rgba(255,255,255,.88); }
+  .service-hero--media .service-hero-actions { justify-content:flex-start; }
+  .service-hero--media .btn-secondary { border-color:rgba(255,255,255,.76); color:var(--color-white); background:rgba(8,20,15,.20); }
+  .service-hero--media .btn-secondary:hover,
+  .service-hero--media .btn-secondary:focus-visible { background:var(--color-gold); border-color:var(--color-gold); color:var(--color-near-black); }
+
+  .home-service-media,
+  .home-service-media img { min-height: 170px; }
+}
+
+/* ========================================================================== 
+   Final form-control hardening — 2026-10-03 (v33)
+   Keeps the production layout intact while normalizing phone entry, Contact
+   link interaction, and native-select spacing/chevron behavior in EN + AR.
+   ========================================================================== */
+
+.phone-input-shell,
+.phone-input-shell .phone-input-ltr,
+.phone-placeholder-visual {
+  font-weight: 400;
+}
+
+html[dir="rtl"] .email-input-ltr {
+  direction: ltr;
+  text-align: right;
+}
+
+.contact-channel-card :is(.contact-channel-link,.contact-phone-number) {
+  transition: color var(--transition-fast);
+}
+@media (hover:hover) and (pointer:fine) {
+  .contact-channel-card :is(.contact-channel-link,.contact-phone-number):hover,
+  .contact-channel-card :is(.contact-channel-link,.contact-phone-number):focus-visible {
+    color: var(--color-green);
+  }
+}
+.contact-channel-card :is(.contact-channel-link,.contact-phone-number):focus-visible {
+  color: var(--color-green);
+}
+
+.select-shell {
+  position: relative;
+  display: block;
+  width: 100%;
+  font-weight: 400;
+}
+.select-shell > select.form-select-control,
+.donor-content .select-shell > select.form-select-control {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  padding-inline-start: 1rem !important;
+  padding-inline-end: 3.2rem !important;
+  background-image: none;
+  font-weight: 400;
+}
+.select-chevron {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  inset-inline-end: 1rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  max-width: none;
+  color: var(--color-near-black);
+  pointer-events: none;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform .18s ease, color var(--transition-fast);
+}
+.select-shell.is-open .select-chevron {
+  transform: translateY(-50%) rotate(180deg);
+  color: var(--color-green);
+}
+/* Native select state is authoritative in modern browsers, so the chevron
+   follows the real popup lifecycle even when the user closes without changing value. */
+.select-shell > select:open + .select-chevron {
+  transform: translateY(-50%) rotate(180deg);
+  color: var(--color-green);
+}
+@media (prefers-reduced-motion: reduce) {
+  .select-chevron { transition: none !important; }
+}
+

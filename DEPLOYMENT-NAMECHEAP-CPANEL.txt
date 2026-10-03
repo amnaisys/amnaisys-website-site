@@ -1,0 +1,11 @@
+AMNAISYS — Namecheap cPanel / VPS deployment notes
+
+1. Upload the CONTENTS of this folder to the document root (normally public_html).
+2. Keep .htaccess and submit-form.php in the document root.
+3. Ensure the mailbox inquiries@amnaisys.com exists and is monitored.
+4. The PHP handler sends website form mail to inquiries@amnaisys.com using PHP mail().
+5. Confirm PHP mail() is enabled on the hosting account. If the host requires authenticated SMTP,
+   replace the mail() transport with the host's SMTP settings before launch.
+6. HTTPS must be enabled before production. The included HSTS rule assumes HTTPS operation.
+7. After deployment, submit all four form paths (EN/AR Contact and Consultation) and confirm receipt.
+8. Do not rename submit-form.php unless the four form action attributes are updated as well.
