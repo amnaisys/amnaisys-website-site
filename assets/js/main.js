@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   reducedMotionQuery.addEventListener?.('change', applyReducedMotionState);
 
-  // 7. Form-control hardening: telephone character contract + select chevrons.
+  // 7. Production form system: input sanitation, localized validation, reload reset and select chevrons.
   const sanitizePhoneValue = (value) => {
     let output = '';
     for (const char of value) {
@@ -325,6 +325,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     return output;
   };
+
+  const normalizedPhoneDigits = (value) => value
+    .replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
+    .replace(/[^0-9]/g, '');
 
   document.querySelectorAll('input[data-phone-input="true"]').forEach((input) => {
     input.addEventListener('input', () => {
@@ -362,11 +366,121 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 8. Prevent accidental duplicate form submissions while preserving native validation.
-  document.querySelectorAll('form[action*="submit-form.php"]').forEach((form) => {
+  const formMessages = {
+    en: {
+      nameRequired: 'Please enter your name.',
+      nameLength: 'Please enter a name between 2 and 100 characters.',
+      nameChars: 'Please use letters, spaces, apostrophes, periods, or hyphens in the name.',
+      companyRequired: 'Please enter your company name.',
+      companyLength: 'Please enter a company name between 2 and 150 characters.',
+      companyChars: 'Please include at least one letter or number in the company name.',
+      emailRequired: 'Please enter your business email address.',
+      emailInvalid: 'Please enter a valid email address, for example name@company.com.',
+      phoneRequired: 'Please enter your phone number.',
+      phoneInvalid: 'Please enter a valid phone number with 7 to 15 digits. You may use spaces and one leading +.',
+      serviceRequired: 'Please select a service, or choose “Other Requirement / Not Yet Decided”.',
+      messageRequired: 'Please describe your project requirement.',
+      messageMin: 'Please enter at least 20 characters for the project requirement.',
+      messageMax: 'Please keep the project requirement within 1,000 characters.'
+    },
+    ar: {
+      nameRequired: 'يرجى إدخال الاسم.',
+      nameLength: 'يرجى إدخال اسم يتراوح بين حرفين و١٠٠ حرف.',
+      nameChars: 'يرجى استخدام الحروف والمسافات وعلامة الاقتباس المفردة والنقطة والشرطة فقط في الاسم.',
+      companyRequired: 'يرجى إدخال اسم الشركة.',
+      companyLength: 'يرجى إدخال اسم شركة يتراوح بين حرفين و١٥٠ حرفًا.',
+      companyChars: 'يرجى أن يتضمن اسم الشركة حرفًا أو رقمًا واحدًا على الأقل.',
+      emailRequired: 'يرجى إدخال البريد الإلكتروني للعمل.',
+      emailInvalid: 'يرجى إدخال بريد إلكتروني صالح، مثل name@company.com.',
+      phoneRequired: 'يرجى إدخال رقم الهاتف.',
+      phoneInvalid: 'يرجى إدخال رقم هاتف صالح يحتوي على ٧ إلى ١٥ رقمًا. يمكن استخدام المسافات وعلامة الجمع في البداية فقط.',
+      serviceRequired: 'يرجى اختيار خدمة، أو اختيار «متطلب آخر / لم يُحدد بعد».',
+      messageRequired: 'يرجى وصف متطلبات المشروع.',
+      messageMin: 'يرجى إدخال ٢٠ حرفًا على الأقل في متطلبات المشروع.',
+      messageMax: 'يرجى ألا تتجاوز متطلبات المشروع ١٠٠٠ حرف.'
+    }
+  };
+
+  const nameCharacterPattern = /^[\p{L}\p{M} .’'\-]+$/u;
+  const validateProductionField = (field, lang) => {
+    if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return true;
+    const messages = formMessages[lang] || formMessages.en;
+    const value = field.value.trim();
+    field.setCustomValidity('');
+
+    if (field.name === 'name') {
+      if (!value) field.setCustomValidity(messages.nameRequired);
+      else if ([...value].length < 2 || [...value].length > 100) field.setCustomValidity(messages.nameLength);
+      else if (!nameCharacterPattern.test(value) || !/\p{L}/u.test(value)) field.setCustomValidity(messages.nameChars);
+    } else if (field.name === 'company') {
+      if (!value) field.setCustomValidity(messages.companyRequired);
+      else if ([...value].length < 2 || [...value].length > 150) field.setCustomValidity(messages.companyLength);
+      else if (!/[\p{L}\p{N}]/u.test(value)) field.setCustomValidity(messages.companyChars);
+    } else if (field.name === 'email') {
+      const completeEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/u;
+      if (!value) field.setCustomValidity(messages.emailRequired);
+      else if (field.validity.typeMismatch || value.length > 254 || !completeEmailPattern.test(value)) field.setCustomValidity(messages.emailInvalid);
+    } else if (field.name === 'phone') {
+      const digits = normalizedPhoneDigits(value);
+      if (!value) field.setCustomValidity(messages.phoneRequired);
+      else if (!/^\+?[0-9٠-٩ ]+$/u.test(value) || digits.length < 7 || digits.length > 15) field.setCustomValidity(messages.phoneInvalid);
+    } else if (field.name === 'service' || field.name === 'serviceInterest') {
+      if (!value) field.setCustomValidity(messages.serviceRequired);
+    } else if (field.name === 'message') {
+      const length = [...value].length;
+      if (!value) field.setCustomValidity(messages.messageRequired);
+      else if (length < 20) field.setCustomValidity(messages.messageMin);
+      else if (length > 1000) field.setCustomValidity(messages.messageMax);
+    }
+    if (field.validity.valid) field.removeAttribute('aria-invalid');
+    else field.setAttribute('aria-invalid', 'true');
+    return field.validity.valid;
+  };
+
+  const navigationEntry = performance.getEntriesByType?.('navigation')?.[0];
+  const pageWasReloaded = navigationEntry?.type === 'reload' || performance.navigation?.type === 1;
+
+  document.querySelectorAll('form.form-system[action*="submit-form.php"]').forEach((form) => {
+    const lang = document.documentElement.lang?.startsWith('ar') ? 'ar' : 'en';
+    const fields = [...form.querySelectorAll('input[name], select[name], textarea[name]')]
+      .filter((field) => field.type !== 'hidden' && field.name !== 'website');
+
+    let startedInput = form.querySelector('input[name="form_started"]');
+    if (!startedInput) {
+      startedInput = document.createElement('input');
+      startedInput.type = 'hidden';
+      startedInput.name = 'form_started';
+      form.appendChild(startedInput);
+    }
+    const resetStartedTime = () => { startedInput.value = String(Date.now()); };
+    resetStartedTime();
+
+    if (pageWasReloaded) {
+      form.reset();
+      resetStartedTime();
+    }
+
+    fields.forEach((field) => {
+      field.addEventListener('input', () => validateProductionField(field, lang));
+      field.addEventListener('change', () => validateProductionField(field, lang));
+    });
+
+    form.addEventListener('invalid', (event) => {
+      validateProductionField(event.target, lang);
+    }, true);
+
     form.addEventListener('submit', (event) => {
-      if (!form.checkValidity()) return;
-      if (form.dataset.submitting === 'true') { event.preventDefault(); return; }
+      fields.forEach((field) => validateProductionField(field, lang));
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        form.reportValidity();
+        form.querySelector(':invalid')?.focus();
+        return;
+      }
+      if (form.dataset.submitting === 'true') {
+        event.preventDefault();
+        return;
+      }
       form.dataset.submitting = 'true';
       form.classList.add('is-submitting');
       const button = form.querySelector('button[type="submit"]');
@@ -374,9 +488,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (button) {
         button.disabled = true;
         button.setAttribute('aria-disabled', 'true');
-        button.textContent = button.dataset.submitSending || (pageIsArabic ? 'جارٍ الإرسال…' : 'Sending…');
+        button.textContent = button.dataset.submitSending || (lang === 'ar' ? 'جارٍ الإرسال…' : 'Sending…');
       }
-      if (status) status.textContent = pageIsArabic ? 'جارٍ إرسال الطلب بأمان…' : 'Sending your request securely…';
+      if (status) status.textContent = lang === 'ar' ? 'جارٍ إرسال الطلب بأمان…' : 'Sending your request securely…';
+    });
+  });
+
+  // A deliberate page reload starts the inquiry forms clean; browser back/forward cache remains untouched.
+  window.addEventListener('pageshow', () => {
+    if (!pageWasReloaded) return;
+    document.querySelectorAll('form.form-system[action*="submit-form.php"]').forEach((form) => {
+      form.reset();
+      const started = form.querySelector('input[name="form_started"]');
+      if (started) started.value = String(Date.now());
+      form.dataset.submitting = 'false';
+      form.classList.remove('is-submitting');
     });
   });
 
