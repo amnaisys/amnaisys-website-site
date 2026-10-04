@@ -1,4 +1,4 @@
-AMNAISYS — Namecheap cPanel / Microsoft Graph + Google Sheets form deployment notes (v39)
+AMNAISYS — Namecheap cPanel / Microsoft Graph + Google Sheets form deployment notes (v40)
 
 1. Upload the CONTENTS of this folder to the document root (normally public_html).
 2. Keep .htaccess and submit-form.php in the document root.
@@ -36,9 +36,9 @@ AMNAISYS — Namecheap cPanel / Microsoft Graph + Google Sheets form deployment 
 8. SERVER-SIDE HARDENING ADDED AROUND THE EXISTING WORKING DELIVERY
       - scalar-only POST reading;
       - Unicode-safe character lengths;
-      - Name: 2–100 characters, Unicode letters + normal name punctuation;
-      - Company: 2–150 characters with at least one letter/number;
-      - Email: valid syntax, maximum 254 characters, complete domain form;
+      - Name: 2–100 characters; Unicode letters/marks, spaces, apostrophes and hyphens only; no digits or other symbols;
+      - Company: 2–150 characters; Unicode letters/numbers/marks and spaces only;
+      - Email: valid syntax, maximum 254 characters, common business-email characters only, complete domain form;
       - Phone: Western/Arabic-Indic digits, spaces, optional leading +; 7–15 actual digits;
       - maximum 25 typed phone characters;
       - Project Scope / Requirement: 20–1000 characters;
@@ -60,13 +60,19 @@ AMNAISYS — Namecheap cPanel / Microsoft Graph + Google Sheets form deployment 
    authoritative visual contract for Contact + Consultation controls: field background, border,
    radius, height, placeholder tone, focus ring, textarea sizing, autofill and form-card hover.
 
-   main.js primes localized customValidity messages before Chrome's first validation pass so the
-   browser does not fall back to generic wording such as "Please select an item in the list."
-   English pages show English messages; Arabic pages show Arabic messages.
+   main.js primes localized customValidity messages and then enables a runtime noValidate flow only
+   after the handlers are installed. Submit attempts explicitly report the first invalid field, so
+   Contact and Consultation show deterministic localized browser prompts instead of silently jumping
+   to an invalid field or falling back to generic Chrome wording. If JavaScript fails to load, the
+   original HTML required/min/max/type constraints remain available as the browser fallback.
 
-   The blank REQUIRED Service option is value="" + selected but is no longer disabled. Required
-   validation still blocks it, while the browser can render it as its normal active selected row
-   instead of a disabled grey popup item. Native popup colors/scrollbars remain browser/OS UI.
+   Name/Company/Business Email are sanitized while typing/pasting to remove disallowed characters;
+   the PHP handler independently repeats the same rules so direct POSTs cannot bypass them.
+
+   The blank REQUIRED Service option is value="" + selected and is not disabled. Required validation
+   still blocks it. Required and optional closed selects now use the same dark text tone; Contact
+   displays "Select a service" / "اختر خدمة" without trailing ellipses. Native popup colors and
+   scrollbars remain browser/OS UI.
 
 10. PHP / HOSTING REQUIREMENTS
       - PHP 8.x recommended;
