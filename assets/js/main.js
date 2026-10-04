@@ -344,6 +344,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const sanitizeWithCaret = (input, sanitizer, event) => {
+    if (event?.isComposing) return;
+    const original = input.value;
+    const start = input.selectionStart ?? original.length;
+    const beforeCaret = sanitizer(original.slice(0, start));
+    const sanitized = sanitizer(original);
+    if (sanitized === original) return;
+    input.value = sanitized;
+    const nextCaret = Math.min(beforeCaret.length, sanitized.length);
+    try { input.setSelectionRange(nextCaret, nextCaret); } catch (_) { /* text-like input selection varies */ }
+  };
+
+  const sanitizeNameValue = (value) => [...value]
+    .filter((char) => /[\p{L}\p{M} '’\-]/u.test(char))
+    .join('');
+
+  const sanitizeCompanyValue = (value) => [...value]
+    .filter((char) => /[\p{L}\p{M}\p{N} ]/u.test(char))
+    .join('');
+
+  const sanitizeBusinessEmailValue = (value) => {
+    let seenAt = false;
+    let output = '';
+    for (const char of value) {
+      if (/[A-Za-z0-9._+\-]/.test(char)) {
+        output += char;
+        continue;
+      }
+      if (char === '@' && !seenAt) {
+        seenAt = true;
+        output += char;
+      }
+    }
+    return output;
+  };
+
+  document.querySelectorAll('form.form-system input[name="name"]').forEach((input) => {
+    input.addEventListener('input', (event) => sanitizeWithCaret(input, sanitizeNameValue, event));
+  });
+  document.querySelectorAll('form.form-system input[name="company"]').forEach((input) => {
+    input.addEventListener('input', (event) => sanitizeWithCaret(input, sanitizeCompanyValue, event));
+  });
+  document.querySelectorAll('form.form-system input[name="email"]').forEach((input) => {
+    input.addEventListener('input', (event) => sanitizeWithCaret(input, sanitizeBusinessEmailValue, event));
+  });
+
   const supportsNativeSelectOpen = typeof CSS !== 'undefined' &&
     typeof CSS.supports === 'function' && CSS.supports('selector(select:open)');
 
@@ -370,10 +416,10 @@ document.addEventListener('DOMContentLoaded', () => {
     en: {
       nameRequired: 'Please enter your name.',
       nameLength: 'Please enter a name between 2 and 100 characters.',
-      nameChars: 'Please use letters, spaces, apostrophes, periods, or hyphens in the name.',
+      nameChars: 'Please use letters, spaces, apostrophes, or hyphens in the name. Numbers and other symbols are not allowed.',
       companyRequired: 'Please enter your company name.',
       companyLength: 'Please enter a company name between 2 and 150 characters.',
-      companyChars: 'Please include at least one letter or number in the company name.',
+      companyChars: 'Please use letters, numbers, and spaces only in the company name.',
       emailRequired: 'Please enter your business email address.',
       emailInvalid: 'Please enter a valid email address, for example name@company.com.',
       phoneRequired: 'Please enter your phone number.',
@@ -386,10 +432,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ar: {
       nameRequired: 'يرجى إدخال الاسم.',
       nameLength: 'يرجى إدخال اسم يتراوح بين حرفين و١٠٠ حرف.',
-      nameChars: 'يرجى استخدام الحروف والمسافات وعلامة الاقتباس المفردة والنقطة والشرطة فقط في الاسم.',
+      nameChars: 'يرجى استخدام الحروف والمسافات وعلامة الاقتباس المفردة أو الشرطة فقط في الاسم. لا يُسمح بالأرقام أو الرموز الأخرى.',
       companyRequired: 'يرجى إدخال اسم الشركة.',
       companyLength: 'يرجى إدخال اسم شركة يتراوح بين حرفين و١٥٠ حرفًا.',
-      companyChars: 'يرجى أن يتضمن اسم الشركة حرفًا أو رقمًا واحدًا على الأقل.',
+      companyChars: 'يرجى استخدام الحروف والأرقام والمسافات فقط في اسم الشركة.',
       emailRequired: 'يرجى إدخال البريد الإلكتروني للعمل.',
       emailInvalid: 'يرجى إدخال بريد إلكتروني صالح، مثل name@company.com.',
       phoneRequired: 'يرجى إدخال رقم الهاتف.',
@@ -401,7 +447,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const nameCharacterPattern = /^[\p{L}\p{M} .’'\-]+$/u;
+  const nameCharacterPattern = /^[\p{L}\p{M} ’'\-]+$/u;
+  const companyCharacterPattern = /^[\p{L}\p{M}\p{N} ]+$/u;
+  const businessEmailPattern = /^[A-Za-z0-9._+\-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$/;
   const validateProductionField = (field, lang, markState = true) => {
     if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return true;
     const messages = formMessages[lang] || formMessages.en;
@@ -415,11 +463,10 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (field.name === 'company') {
       if (!value) field.setCustomValidity(messages.companyRequired);
       else if ([...value].length < 2 || [...value].length > 150) field.setCustomValidity(messages.companyLength);
-      else if (!/[\p{L}\p{N}]/u.test(value)) field.setCustomValidity(messages.companyChars);
+      else if (!companyCharacterPattern.test(value) || !/[\p{L}\p{N}]/u.test(value)) field.setCustomValidity(messages.companyChars);
     } else if (field.name === 'email') {
-      const completeEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/u;
       if (!value) field.setCustomValidity(messages.emailRequired);
-      else if (field.validity.typeMismatch || value.length > 254 || !completeEmailPattern.test(value)) field.setCustomValidity(messages.emailInvalid);
+      else if (field.validity.typeMismatch || value.length > 254 || !businessEmailPattern.test(value)) field.setCustomValidity(messages.emailInvalid);
     } else if (field.name === 'phone') {
       const digits = normalizedPhoneDigits(value);
       if (!value) field.setCustomValidity(messages.phoneRequired);
@@ -474,12 +521,18 @@ document.addEventListener('DOMContentLoaded', () => {
       validateProductionField(event.target, lang);
     }, true);
 
+    // JavaScript now owns the interactive validation flow after all localized
+    // handlers are installed. If JavaScript fails to load, the HTML forms still
+    // retain their native required/min/max/type constraints as a fallback.
+    form.noValidate = true;
+
     form.addEventListener('submit', (event) => {
       fields.forEach((field) => validateProductionField(field, lang));
-      if (!form.checkValidity()) {
+      const firstInvalid = fields.find((field) => !field.validity.valid);
+      if (firstInvalid) {
         event.preventDefault();
-        form.reportValidity();
-        form.querySelector(':invalid')?.focus();
+        try { firstInvalid.focus({ preventScroll: false }); } catch (_) { firstInvalid.focus(); }
+        firstInvalid.reportValidity();
         return;
       }
       if (form.dataset.submitting === 'true') {

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AMNAISYS Unified Production Form Contract — v39
+   AMNAISYS Unified Production Form Contract — v40
    One visual/interaction contract for EN/AR Contact + Consultation forms.
    Loaded after style.css and donor-content.css on the four form pages only.
    ========================================================================== */
@@ -61,13 +61,9 @@
   opacity: .72;
 }
 
-/* Empty required select reads visually like a placeholder while retaining a
-   normal (not disabled) blank option. This lets native browser selection use
-   its standard active highlight instead of the disabled grey row. */
-.form-system select:required:invalid,
-.donor-content .form-system select:required:invalid {
-  color: rgba(125,122,116,.86);
-}
+/* Required and optional native selects use the same closed-control text tone.
+   The empty required option remains invalid through HTML `required`, but it is
+   not visually faded compared with the optional consultation selects. */
 .form-system select option,
 .donor-content .form-system select option {
   color: var(--form-ui-text);

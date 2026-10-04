@@ -381,20 +381,36 @@ $emailLength = utf8_length($emailRaw);
 $phoneLength = utf8_length($phoneRaw);
 $messageLength = utf8_length($messageRaw);
 
-if ($nameLength < 2 || $nameLength > 100 || !preg_match('/\p{L}/u', $nameRaw) || !preg_match('/^[\p{L}\p{M} .\'’\-]+$/u', $nameRaw)) {
+if (
+    $nameLength < 2 ||
+    $nameLength > 100 ||
+    !preg_match('/\p{L}/u', $nameRaw) ||
+    !preg_match('/^[\p{L}\p{M} \'’\-]+$/u', $nameRaw)
+) {
     validation_fail($lang);
 }
-if ($companyLength < 2 || $companyLength > 150 || !preg_match('/[\p{L}\p{N}]/u', $companyRaw)) {
+
+// Company names accept Unicode letters/numbers and spaces only.
+if (
+    $companyLength < 2 ||
+    $companyLength > 150 ||
+    !preg_match('/[\p{L}\p{N}]/u', $companyRaw) ||
+    !preg_match('/^[\p{L}\p{M}\p{N} ]+$/u', $companyRaw)
+) {
     validation_fail($lang);
 }
+
+// Keep business email input deliberately narrow while preserving common valid
+// corporate formats such as name.surname+tag@company-domain.sa.
 if (
     $emailLength < 3 ||
     $emailLength > 254 ||
     filter_var($emailRaw, FILTER_VALIDATE_EMAIL) === false ||
-    !preg_match('/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/u', $emailRaw)
+    !preg_match('/^[A-Za-z0-9._+\-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$/', $emailRaw)
 ) {
     validation_fail($lang);
 }
+
 if ($phoneLength < 7 || $phoneLength > 25 || !preg_match('/^\+?[0-9٠-٩ ]+$/u', $phoneRaw)) {
     validation_fail($lang);
 }
