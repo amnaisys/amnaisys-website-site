@@ -505,6 +505,13 @@ append_to_google_sheet([
     'details'   => implode('; ', $details),
     'message'   => $message,
     'ip'        => $clientIp,
+
+    // Sheet-only consultation fields. Existing email construction/transport above is intentionally untouched.
+    'industry'               => $formType === 'consultation' ? clean_line(post_string('industry'), 240) : '',
+    'companySize'            => $formType === 'consultation' ? clean_line(post_string('companySize'), 240) : '',
+    'projectStage'           => $formType === 'consultation' ? clean_line(post_string('projectStage'), 240) : '',
+    'budgetRange'            => $formType === 'consultation' ? clean_line(post_string('budgetRange'), 240) : '',
+    'preferredContactMethod' => $formType === 'consultation' ? clean_line(post_string('preferredContactMethod'), 240) : '',
 ]);
 
 header('Location: '.$returnTo, true, 303);
