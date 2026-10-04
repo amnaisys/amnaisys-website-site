@@ -80,6 +80,9 @@
   --icon-glyph: 1.55rem;
   --control-height: 44px;
   --control-height-lg: 48px;
+  --form-control-radius: 8px;
+  --form-control-bg: var(--color-warm-off-white);
+  --form-control-border: #CFC9BE;
   --shadow-card-rest: 0 6px 20px rgba(23, 23, 23, 0.035);
   --shadow-card-hover: 0 14px 30px rgba(23, 23, 23, 0.075);
 }
@@ -3221,8 +3224,8 @@ html[dir="rtl"] .services-lifecycle-card > span { letter-spacing: 0; }
 
 /* Recurring former inline styles promoted to shared components. */
 .form-label { display:block; margin-bottom:.5rem; font-size:.9rem; font-weight:600; color:var(--color-near-black); }
-.form-control { width:100%; min-height:var(--control-height); padding:.75rem 1rem; border:1px solid var(--color-neutral-border); border-radius:var(--radius-md); background:var(--color-white); color:var(--color-near-black); font-family:inherit; }
-.form-control:focus { border-color:var(--color-green-dark); outline:2px solid rgba(0,143,78,.12); outline-offset:1px; }
+.form-control { width:100%; min-height:50px; padding:.75rem 1rem; border:1px solid var(--form-control-border); border-radius:var(--form-control-radius); background:var(--form-control-bg); color:var(--color-near-black); font-family:inherit; transition:border-color .2s ease, box-shadow .2s ease; }
+.form-control:focus { border-color:var(--color-green-dark); outline:none; box-shadow:0 0 0 3px rgba(0,111,61,.12); }
 .contact-channel-card { padding:var(--card-padding-compact); border:1px solid var(--color-neutral-border); border-radius:var(--card-radius); background:var(--color-white); }
 .contact-channel-link { color:var(--color-near-black); text-decoration:none; font-size:1.05rem; font-weight:600; }
 .contact-channel-link:hover,.contact-channel-link:focus-visible { color:var(--color-green-dark); }
@@ -5143,3 +5146,61 @@ html[dir="rtl"] .email-input-ltr {
   .select-chevron { transition: none !important; }
 }
 
+
+
+/* ========================================================================== 
+   Final bilingual form-system hardening — 2026-10-04 (v37)
+   Shared visual contract for Contact + Consultation without changing native
+   semantics. Server-side validation remains authoritative in submit-form.php.
+   ========================================================================== */
+
+.contact-form .select-shell > select.form-select-control {
+  min-height: 50px;
+  border: 1px solid var(--form-control-border) !important;
+  border-radius: var(--form-control-radius) !important;
+  background-color: var(--form-control-bg) !important;
+  color: var(--color-near-black);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.contact-form .select-shell > select.form-select-control:focus {
+  outline: none;
+  border-color: var(--color-green-dark) !important;
+  box-shadow: 0 0 0 3px rgba(0,111,61,.12);
+}
+.contact-form .form-textarea {
+  min-height: 154px;
+  resize: vertical;
+}
+.form-system [aria-invalid="true"] {
+  border-color: #B42318 !important;
+}
+html[dir="rtl"] .form-system input[type="email"] {
+  direction: ltr;
+  text-align: right;
+}
+
+/* Native option popups are partly browser/OS controlled; these colors are
+   applied where the platform exposes option styling without replacing select. */
+.form-system select option[value=""] {
+  color: var(--color-white);
+  background-color: var(--color-green);
+}
+.form-system select option:checked {
+  color: var(--color-white);
+  background-color: var(--color-green);
+}
+
+.contact-form-card {
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+@media (hover:hover) and (pointer:fine) {
+  .contact-form-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0,143,78,.22) !important;
+    box-shadow: var(--shadow-card-hover) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-form-card { transition: none !important; }
+}

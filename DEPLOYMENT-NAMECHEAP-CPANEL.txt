@@ -4,23 +4,47 @@ AMNAISYS — Namecheap cPanel / Microsoft 365 SMTP deployment notes
 2. Keep .htaccess and submit-form.php in the document root.
 3. Ensure the mailbox inquiries@amnaisys.com exists and is monitored in Microsoft 365 / Outlook.
 4. The four website forms (EN/AR Contact and EN/AR Consultation) all post to submit-form.php.
-5. Form delivery now uses Microsoft 365 SMTP rather than PHP mail():
+5. Form delivery uses the existing Microsoft 365 authenticated SMTP configuration in submit-form.php:
       SMTP host: smtp.office365.com
       Port: 587
       Encryption: STARTTLS / TLS
-      From: inquiries@amnaisys.com
-      To: inquiries@amnaisys.com
-      Reply-To: the visitor's validated email address
-   The current transport is intentionally configured without an SMTP username/password, according
-   to the deployment configuration provided for this site. The Microsoft 365 tenant / relay setup must
-   permit this server to submit mail using the above route.
-6. PHP requirements on the Namecheap account:
+      Envelope/From address: inquiries@amnaisys.com
+      Recipient: inquiries@amnaisys.com
+      Reply-To: the visitor's validated email address and submitted name
+   IMPORTANT: the SMTP authentication values in submit-form.php were manually configured for this
+   deployment and must be preserved when updating the site.
+6. Outlook message presentation is intentionally configured as:
+      From display name: <visitor name> via AMNAISYS Website
+      From address: inquiries@amnaisys.com
+      Reply-To: <visitor name> <visitor email>
+      Subject: [AMNAISYS] Contact Inquiry / Consultation Request — <visitor name> — <company>
+   This keeps Microsoft 365 sender identity valid while making the actual inquiry contact obvious.
+7. Server-side form hardening in submit-form.php includes:
+      - required-field and length validation independent of the browser;
+      - Name 2–100 Unicode characters;
+      - Company 2–150 characters;
+      - Email syntax validation, maximum 254 characters;
+      - Phone 7–15 actual digits after formatting is removed, maximum 25 typed characters;
+      - Project Scope / Requirement 20–1000 characters;
+      - required Service value allowlisting;
+      - Consultation optional-select allowlisting;
+      - existing honeypot protection;
+      - per-IP rate limiting (maximum 5 submissions / 10 minutes and 20 / 24 hours);
+      - duplicate inquiry suppression for 30 minutes;
+      - a low-friction too-fast-submission signal when JavaScript timing data is available.
+   Rate-limit/duplicate state uses the PHP system temporary directory. If temporary storage cannot be
+   created, the guard fails open so legitimate form delivery is not disabled; core server validation
+   and honeypot protection still remain active.
+8. PHP requirements on the Namecheap account:
       - PHP 8.x recommended
       - OpenSSL enabled
       - outbound TCP connections to smtp.office365.com:587 allowed
       - stream_socket_client() and stream_socket_enable_crypto() available
-7. HTTPS must be enabled before production. The included HSTS rule assumes HTTPS operation.
-8. After deployment, submit all four live form paths and confirm message receipt in Microsoft 365:
+      - sys_get_temp_dir(), flock(), and normal temporary-file writes available for anti-abuse state
+9. Keep ModSecurity enabled in cPanel. Form validation/rate limiting mitigates form abuse but is not
+   a replacement for edge/network DDoS protection.
+10. HTTPS must be enabled before production. The included HSTS rule assumes HTTPS operation.
+11. After deployment, submit all four live form paths and confirm message receipt in Microsoft 365:
       /en/contact.html
       /ar/contact.html
       /en/consultation.html
@@ -28,13 +52,19 @@ AMNAISYS — Namecheap cPanel / Microsoft 365 SMTP deployment notes
    For each test confirm:
       - the browser redirects to the correct EN/AR thank-you page;
       - the message arrives at inquiries@amnaisys.com;
-      - From displays as AMNAISYS Website <inquiries@amnaisys.com>;
-      - Reply-To points to the visitor's submitted email;
+      - From shows the visitor name followed by "via AMNAISYS Website" while retaining the
+        inquiries@amnaisys.com sender address;
+      - Reply-To points to the visitor's submitted email/name;
       - Arabic content is readable and preserved.
-9. If a form returns the friendly "Unable to send your request" page, inspect the PHP error log.
-   SMTP transport failures are logged server-side as "AMNAISYS SMTP ..." messages; technical SMTP
-   responses are never shown to website visitors.
-10. If Microsoft 365 rejects the SMTP transaction because the server is not authorized to relay,
-    the Microsoft 365 / hosting-side SMTP or connector configuration must be adjusted. Do not fall
-    back to PHP mail() in production merely to bypass a relay rejection.
-11. Do not rename submit-form.php unless the four form action attributes are updated as well.
+12. Validation smoke tests should also verify:
+      - malformed email is blocked with a localized browser message;
+      - required Service shows the custom EN/AR service-selection message;
+      - phone rejects fewer than 7 or more than 15 actual digits;
+      - project text rejects fewer than 20 or more than 1000 characters;
+      - tampered select values are rejected server-side;
+      - a deliberate page reload clears form values;
+      - an identical valid submission within 30 minutes does not generate a second email.
+13. If a form returns the friendly "Unable to send your request" page, inspect the PHP error log.
+    SMTP transport failures are logged server-side as "AMNAISYS SMTP ..." messages; technical SMTP
+    responses are never shown to website visitors.
+14. Do not rename submit-form.php unless all four form action attributes are updated as well.

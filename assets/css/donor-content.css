@@ -296,7 +296,7 @@
   .donor-content .field > span:not(.phone-input-shell):not(.select-shell) { font-size: 14px; font-weight: 700; }
   .donor-content .field b { color: var(--danger); }
   .donor-content .field em { font-style: normal; color: var(--muted); font-weight: 500; font-size: 12px; }
-  .donor-content .field input, .donor-content .field select, .donor-content .field textarea { width: 100%; border: 1px solid #cfc9be; background: var(--canvas); color: var(--ink); border-radius: var(--radius-xs); min-height: 50px; padding: 12px 14px; transition: border-color .2s ease, box-shadow .2s ease; }
+  .donor-content .field input, .donor-content .field select, .donor-content .field textarea { width: 100%; border: 1px solid var(--form-control-border); background: var(--form-control-bg); color: var(--ink); border-radius: var(--form-control-radius); min-height: 50px; padding: 12px 14px; transition: border-color .2s ease, box-shadow .2s ease; }
   .donor-content .field textarea { min-height: 154px; resize: vertical; }
   .donor-content .field input:focus, .donor-content .field select:focus, .donor-content .field textarea:focus { outline: none; border-color: var(--green-dark); box-shadow: 0 0 0 3px rgba(0,111,61,.12); }
   .donor-content .field [aria-invalid="true"] { border-color: var(--danger); }
@@ -1033,4 +1033,20 @@ html[dir="rtl"] .donor-content .page-hero--media .page-hero__media { justify-sel
   .donor-content .page-hero--media .eyebrow { color:var(--color-green-on-dark); }
   .donor-content .page-hero--media h1 { color:var(--color-hero-gold); text-shadow:0 2px 16px rgba(0,0,0,.24); }
   .donor-content .page-hero--media .page-hero__lede { color:rgba(255,255,255,.88); }
+}
+
+
+/* v37: Consultation card interaction matches the restrained production card system. */
+.donor-content .form-card {
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+@media (hover:hover) and (pointer:fine) {
+  .donor-content .form-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0,143,78,.22);
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .donor-content .form-card { transition: none !important; }
 }
