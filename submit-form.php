@@ -10,7 +10,7 @@ const AMNAISYS_FROM_NAME      = 'AMNAISYS Website';
 // Microsoft Entra ID / Microsoft 365 App Registration Credentials
 const M365_TENANT_ID     = 'c4e65f16-84c1-44d5-b50c-715bdef50038';
 const M365_CLIENT_ID     = 'd075c03d-38c4-4a99-9861-a76509cd8973';
-const M365_CLIENT_SECRET = '';
+const M365_CLIENT_SECRET = 'ZwY8Q~tJcIfbxd1aT0kbRpikIpdP2ANybAIBWdnx';
 
 function clean_line(string $value, int $max = 200): string {
     $value = trim(preg_replace('/[\r\n\t]+/u', ' ', $value) ?? '');
