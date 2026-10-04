@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const nameCharacterPattern = /^[\p{L}\p{M} .’'\-]+$/u;
-  const validateProductionField = (field, lang) => {
+  const validateProductionField = (field, lang, markState = true) => {
     if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return true;
     const messages = formMessages[lang] || formMessages.en;
     const value = field.value.trim();
@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
       else if (length < 20) field.setCustomValidity(messages.messageMin);
       else if (length > 1000) field.setCustomValidity(messages.messageMax);
     }
-    if (field.validity.valid) field.removeAttribute('aria-invalid');
+    if (!markState || field.validity.valid) field.removeAttribute('aria-invalid');
     else field.setAttribute('aria-invalid', 'true');
     return field.validity.valid;
   };
@@ -459,6 +459,11 @@ document.addEventListener('DOMContentLoaded', () => {
       form.reset();
       resetStartedTime();
     }
+
+    // Prime localized customValidity strings before the browser's first native
+    // validation pass. This prevents Chrome from falling back to generic copy
+    // such as “Please select an item in the list.” on untouched required fields.
+    fields.forEach((field) => validateProductionField(field, lang, false));
 
     fields.forEach((field) => {
       field.addEventListener('input', () => validateProductionField(field, lang));

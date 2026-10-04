@@ -1,0 +1,151 @@
+/* ==========================================================================
+   AMNAISYS Unified Production Form Contract — v39
+   One visual/interaction contract for EN/AR Contact + Consultation forms.
+   Loaded after style.css and donor-content.css on the four form pages only.
+   ========================================================================== */
+
+.form-system {
+  --form-ui-bg: #FAF9F6;
+  --form-ui-border: #CFC9BE;
+  --form-ui-text: #171717;
+  --form-ui-placeholder: #7D7A74;
+  --form-ui-focus: #006F3D;
+  --form-ui-danger: #B42318;
+  --form-ui-radius: 8px;
+  --form-ui-height: 50px;
+  --form-ui-focus-ring: 0 0 0 3px rgba(0,111,61,.12);
+}
+
+/* Inputs, native selects and textareas now share one computed appearance,
+   regardless of whether the page came from the original Contact system or
+   the donor Consultation system. */
+.form-system input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+.form-system select,
+.form-system textarea,
+.donor-content .form-system input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+.donor-content .form-system select,
+.donor-content .form-system textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--form-ui-height);
+  padding: 12px 14px;
+  border: 1px solid var(--form-ui-border);
+  border-radius: var(--form-ui-radius);
+  background: var(--form-ui-bg);
+  color: var(--form-ui-text);
+  font: inherit;
+  font-weight: 400;
+  line-height: 1.45;
+  box-shadow: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.form-system .select-shell > select.form-select-control,
+.donor-content .form-system .select-shell > select.form-select-control {
+  min-height: var(--form-ui-height);
+  padding-block: 12px !important;
+  padding-inline-start: 14px !important;
+  padding-inline-end: 3.2rem !important;
+  border: 1px solid var(--form-ui-border) !important;
+  border-radius: var(--form-ui-radius) !important;
+  background-color: var(--form-ui-bg) !important;
+  color: var(--form-ui-text);
+  font-weight: 400;
+}
+
+.form-system input::placeholder,
+.form-system textarea::placeholder,
+.donor-content .form-system input::placeholder,
+.donor-content .form-system textarea::placeholder {
+  color: var(--form-ui-placeholder);
+  opacity: .72;
+}
+
+/* Empty required select reads visually like a placeholder while retaining a
+   normal (not disabled) blank option. This lets native browser selection use
+   its standard active highlight instead of the disabled grey row. */
+.form-system select:required:invalid,
+.donor-content .form-system select:required:invalid {
+  color: rgba(125,122,116,.86);
+}
+.form-system select option,
+.donor-content .form-system select option {
+  color: var(--form-ui-text);
+}
+
+.form-system input:not([type="hidden"]):focus,
+.form-system select:focus,
+.form-system textarea:focus,
+.donor-content .form-system input:not([type="hidden"]):focus,
+.donor-content .form-system select:focus,
+.donor-content .form-system textarea:focus {
+  outline: none !important;
+  border-color: var(--form-ui-focus) !important;
+  box-shadow: var(--form-ui-focus-ring) !important;
+  background-color: var(--form-ui-bg);
+}
+
+/* Contact's Service Interest + Project Scope previously followed a different
+   focus/size path. They are explicitly kept inside the same contract. */
+.form-system textarea[name="message"],
+.donor-content .form-system textarea[name="message"] {
+  height: 112px;
+  min-height: 112px;
+  resize: vertical;
+}
+
+.form-system [aria-invalid="true"],
+.donor-content .form-system [aria-invalid="true"] {
+  border-color: var(--form-ui-danger) !important;
+}
+.form-system [aria-invalid="true"]:focus,
+.donor-content .form-system [aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px rgba(180,35,24,.11) !important;
+}
+
+/* Preserve the deterministic RTL Arabic phone placeholder architecture. */
+html[dir="rtl"] .form-system .phone-input-shell,
+html[dir="rtl"] .donor-content .form-system .phone-input-shell {
+  width: 100%;
+}
+html[dir="rtl"] .form-system .phone-input-ltr,
+html[dir="rtl"] .donor-content .form-system .phone-input-ltr,
+html[dir="rtl"] .form-system input[type="email"],
+html[dir="rtl"] .donor-content .form-system input[type="email"] {
+  direction: ltr;
+  text-align: right;
+}
+
+/* Shared form-card motion; intentionally modest and pointer-only. */
+.form-system-card {
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+@media (hover:hover) and (pointer:fine) {
+  .form-system-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0,143,78,.22) !important;
+    box-shadow: var(--shadow-card-hover, 0 14px 30px rgba(23,23,23,.075)) !important;
+  }
+}
+
+/* Autofill should not visually revert the sand field surface to browser blue/yellow. */
+.form-system input:-webkit-autofill,
+.form-system input:-webkit-autofill:hover,
+.form-system input:-webkit-autofill:focus,
+.donor-content .form-system input:-webkit-autofill,
+.donor-content .form-system input:-webkit-autofill:hover,
+.donor-content .form-system input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--form-ui-text);
+  box-shadow: 0 0 0 1000px var(--form-ui-bg) inset !important;
+  transition: background-color 9999s ease-out 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-system-card,
+  .form-system input,
+  .form-system select,
+  .form-system textarea {
+    transition: none !important;
+  }
+  .form-system-card:hover { transform: none !important; }
+}

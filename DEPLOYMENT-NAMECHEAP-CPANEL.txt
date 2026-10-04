@@ -1,89 +1,111 @@
-AMNAISYS — Namecheap cPanel / Microsoft Graph form-delivery deployment notes
+AMNAISYS — Namecheap cPanel / Microsoft Graph + Google Sheets form deployment notes (v39)
 
 1. Upload the CONTENTS of this folder to the document root (normally public_html).
 2. Keep .htaccess and submit-form.php in the document root.
-3. Ensure the mailbox inquiries@amnaisys.com exists and is monitored in Microsoft 365 / Outlook.
-4. The four website forms (EN/AR Contact and EN/AR Consultation) all post to submit-form.php.
+3. Ensure inquiries@amnaisys.com exists and is monitored in Microsoft 365 / Outlook.
+4. All four forms (EN/AR Contact and EN/AR Consultation) post to the same submit-form.php.
 
-5. FORM DELIVERY — VERIFIED MICROSOFT GRAPH TRANSPORT
-   submit-form.php uses the Microsoft Graph API over HTTPS/443 with OAuth 2.0 client credentials.
-   The manually configured Microsoft Entra / Microsoft 365 application values in submit-form.php are
-   the working production transport configuration and must be preserved when updating the site.
+5. IMPORTANT — PRESERVE THE ALREADY-WORKING LIVE CONFIGURATION
+   The supplied submit-form.php is built from the current working Graph + Google Sheets handler.
+   In the review copy the following values are intentionally represented as SECRET placeholders:
+      M365_TENANT_ID
+      M365_CLIENT_ID
+      M365_CLIENT_SECRET
+      GOOGLE_SHEET_WEBHOOK_URL
 
-   Transport flow:
-      - acquire an application access token from the Microsoft identity platform;
-      - call Microsoft Graph /users/inquiries@amnaisys.com/sendMail;
+   Before replacing the live handler, copy the REAL values from the currently working production
+   submit-form.php into those same four constants. Do not invent, regenerate, rename, or otherwise
+   change the working Microsoft Entra / Microsoft 365 or Google Apps Script configuration.
+
+6. MICROSOFT 365 DELIVERY — EXISTING WORKING GRAPH TRANSPORT IS PRESERVED
+   submit-form.php uses Microsoft Graph over HTTPS/443 with OAuth 2.0 client credentials.
+   Transport flow remains:
+      - acquire the application token from Microsoft identity platform;
+      - call /users/inquiries@amnaisys.com/sendMail;
       - deliver to inquiries@amnaisys.com;
-      - save a copy to Sent Items;
-      - set Reply-To to the visitor's validated email address and submitted name.
+      - save a copy in Sent Items;
+      - use the visitor's validated email + submitted name in Reply-To.
 
-   Do not replace this working Graph transport with PHP mail() or the earlier SMTP implementation.
+   Do not replace this working Graph transport with PHP mail() or the retired SMTP implementation.
 
-6. OUTLOOK MESSAGE PRESENTATION
-   The authenticated sender remains the Microsoft 365 AMNAISYS mailbox.
-   Visitor identity is made clear through:
-      Reply-To: <visitor name> <visitor email>
-      Subject: [AMNAISYS] Contact Inquiry / Consultation Request — <visitor name> — <company>
-      Body: submitted name, company, email, phone, service/form details and project message.
-   This preserves the verified Microsoft sender identity while making the actual inquiry contact obvious.
+7. GOOGLE SHEETS — EXISTING WORKING WEBHOOK IS PRESERVED
+   After Microsoft Graph accepts the email, the same validated lead is posted to the existing
+   Google Apps Script webhook. Google Sheets remains NON-BLOCKING: a Sheet/webhook failure is
+   written to the PHP error log but does not turn an already-delivered inquiry into a visitor error.
 
-7. SERVER-SIDE FORM HARDENING IN submit-form.php
-      - required-field and length validation independent of the browser;
-      - Name: 2–100 Unicode characters;
-      - Company: 2–150 characters;
-      - Email: valid syntax, maximum 254 characters;
-      - Phone: 7–15 actual digits after formatting removal, maximum 25 typed characters;
+8. SERVER-SIDE HARDENING ADDED AROUND THE EXISTING WORKING DELIVERY
+      - scalar-only POST reading;
+      - Unicode-safe character lengths;
+      - Name: 2–100 characters, Unicode letters + normal name punctuation;
+      - Company: 2–150 characters with at least one letter/number;
+      - Email: valid syntax, maximum 254 characters, complete domain form;
+      - Phone: Western/Arabic-Indic digits, spaces, optional leading +; 7–15 actual digits;
+      - maximum 25 typed phone characters;
       - Project Scope / Requirement: 20–1000 characters;
-      - required Service value allowlisting;
-      - Consultation optional-select allowlisting;
-      - honeypot protection;
-      - per-IP rate limiting: maximum 5 submissions / 10 minutes and 20 / 24 hours;
-      - duplicate inquiry suppression for 30 minutes;
-      - low-friction too-fast-submission signal when JavaScript timing data is available.
+      - Contact Service allowlist;
+      - Consultation Service allowlist;
+      - Consultation Industry / Company Size / Project Stage / Budget / Contact Method allowlists;
+      - existing honeypot retained;
+      - low-friction too-fast submission guard when JavaScript timing exists;
+      - per-IP rate limiting: max 5 submissions / 10 minutes and 20 / 24 hours;
+      - identical inquiry suppression for 30 minutes;
+      - duplicate reservation released if Graph delivery fails, so a legitimate visitor can retry.
 
-   Rate-limit/duplicate state uses the PHP system temporary directory. If temporary storage cannot be
-   created, the guard fails open so legitimate form delivery is not disabled; core validation and the
-   honeypot remain active.
+   Rate-limit/duplicate state is stored in the PHP system temporary directory using flock().
+   If that storage is unavailable, these two guards fail open rather than disabling the forms;
+   field validation + honeypot still remain active.
 
-8. PHP REQUIREMENTS ON THE NAMECHEAP ACCOUNT
+9. FRONTEND VALIDATION + VISUAL CONTRACT
+   The four form pages load assets/css/forms.css after the existing stylesheets. It is the single
+   authoritative visual contract for Contact + Consultation controls: field background, border,
+   radius, height, placeholder tone, focus ring, textarea sizing, autofill and form-card hover.
+
+   main.js primes localized customValidity messages before Chrome's first validation pass so the
+   browser does not fall back to generic wording such as "Please select an item in the list."
+   English pages show English messages; Arabic pages show Arabic messages.
+
+   The blank REQUIRED Service option is value="" + selected but is no longer disabled. Required
+   validation still blocks it, while the browser can render it as its normal active selected row
+   instead of a disabled grey popup item. Native popup colors/scrollbars remain browser/OS UI.
+
+10. PHP / HOSTING REQUIREMENTS
       - PHP 8.x recommended;
       - PHP cURL extension enabled;
-      - outbound HTTPS connections on port 443 allowed;
+      - outbound HTTPS on port 443 allowed;
       - JSON support enabled;
-      - sys_get_temp_dir(), flock(), and normal temporary-file writes available for anti-abuse state.
+      - sys_get_temp_dir(), flock(), and normal temporary-file writes available;
+      - ModSecurity should remain enabled in cPanel.
 
-9. Keep ModSecurity enabled in cPanel. Form validation/rate limiting mitigates form abuse but is not a
-   replacement for edge/network DDoS protection.
-
-10. HTTPS must be enabled before production. The included HSTS rule assumes HTTPS operation.
-
-11. LIVE FORM VERIFICATION AFTER DEPLOYMENT
-   Submit all four production paths:
+11. LIVE VERIFICATION AFTER DEPLOYMENT
+   Submit all four paths once:
       /en/contact.html
       /ar/contact.html
       /en/consultation.html
       /ar/consultation.html
 
-   For each test confirm:
-      - correct EN/AR thank-you redirect;
-      - message arrives at inquiries@amnaisys.com;
-      - subject contains visitor name and company;
-      - Reply-To contains the visitor's submitted name and email;
-      - Arabic content is readable and preserved;
-      - a sent copy appears in Microsoft 365 Sent Items.
+   Confirm for each:
+      - correct thank-you redirect;
+      - email arrives at inquiries@amnaisys.com;
+      - Sent Items copy exists;
+      - Reply-To contains the visitor's submitted name/email;
+      - subject contains visitor name + company;
+      - Arabic content renders correctly;
+      - one corresponding Google Sheet row is appended.
 
 12. VALIDATION / ABUSE SMOKE TESTS
-      - malformed email is blocked with a localized browser message;
-      - required Service shows the custom EN/AR service-selection message;
-      - phone rejects fewer than 7 or more than 15 actual digits;
-      - project text rejects fewer than 20 or more than 1000 characters;
+      - blank required Service displays the custom localized service-selection message;
+      - malformed email displays the custom localized valid-email message;
+      - phone rejects <7 or >15 actual digits;
+      - Project text rejects <20 or >1000 characters server-side;
       - tampered select values are rejected server-side;
-      - a deliberate page reload clears form values;
-      - an identical valid submission within 30 minutes does not generate a second email;
-      - excessive submissions from one IP receive a rate-limit response.
+      - honeypot submission silently redirects and sends neither email nor Sheet row;
+      - deliberate reload starts the form clean;
+      - an identical valid inquiry within 30 minutes does not generate duplicate mail/Sheet rows;
+      - sixth valid attempt within 10 minutes from one server-observed IP receives HTTP 429.
 
-13. If a form returns the friendly "Unable to send your request" page, inspect the PHP error log.
-    Graph token failures are logged as "Microsoft Graph Token Error ..." and send failures as
-    "Microsoft Graph sendMail Error ...". Technical responses are never shown to visitors.
+13. If a form returns the friendly failure page, inspect the PHP error log.
+   Existing Graph failures are logged as "Microsoft Graph Token Error ..." or
+   "Microsoft Graph sendMail Error ...". Existing Google Sheet failures are logged as
+   "Google Sheets Webhook Error ...". Technical responses are never exposed to visitors.
 
 14. Do not rename submit-form.php unless all four form action attributes are updated as well.

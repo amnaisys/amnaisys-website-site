@@ -8,8 +8,12 @@ const AMNAISYS_FROM_ADDRESS   = 'inquiries@amnaisys.com';
 const AMNAISYS_FROM_NAME      = 'AMNAISYS Website';
 
 // Microsoft Entra ID / Microsoft 365 App Registration Credentials
-const M365_TENANT_ID     = 'c4e65f16-84c1-44d5-b50c-715bdef50038';
-const M365_CLIENT_ID     = 'd075c03d-38c4-4a99-9861-a76509cd8973';
+const M365_TENANT_ID     = 'SECRET';
+const M365_CLIENT_ID     = 'SECRET';
+const M365_CLIENT_SECRET = 'SECRET';
+
+// Google Sheet Webhook URL (Deployed via Google Apps Script Web App)
+const GOOGLE_SHEET_WEBHOOK_URL = 'SECRET';
 
 function clean_line(string $value, int $max = 200): string {
     $value = trim(preg_replace('/[\r\n\t]+/u', ' ', $value) ?? '');
@@ -21,11 +25,14 @@ function clean_text(string $value, int $max = 3000): string {
     return function_exists('mb_substr') ? mb_substr($value, 0, $max, 'UTF-8') : substr($value, 0, $max);
 }
 
+
+/** Safely read a scalar POST field; arrays/objects are never accepted as form values. */
 function post_string(string $key): string {
     $value = $_POST[$key] ?? '';
     return is_string($value) ? $value : '';
 }
 
+/** Unicode-aware character count with a PCRE fallback when mbstring is unavailable. */
 function utf8_length(string $value): int {
     if (function_exists('mb_strlen')) {
         return mb_strlen($value, 'UTF-8');
@@ -33,6 +40,7 @@ function utf8_length(string $value): int {
     return preg_match_all('/./us', $value, $matches) ?: 0;
 }
 
+/** Normalize Western + Arabic-Indic phone digits to ASCII digits for length checks/fingerprints. */
 function normalized_phone_digits(string $value): string {
     $value = strtr($value, [
         '٠' => '0', '١' => '1', '٢' => '2', '٣' => '3', '٤' => '4',
@@ -41,6 +49,7 @@ function normalized_phone_digits(string $value): string {
     return preg_replace('/[^0-9]/', '', $value) ?? '';
 }
 
+/** Localized safe failure for direct POSTs that bypass browser validation. */
 function validation_fail(string $lang): never {
     $message = $lang === 'ar'
         ? 'يرجى مراجعة الحقول وإدخال معلومات صحيحة قبل إرسال النموذج.'
@@ -48,6 +57,7 @@ function validation_fail(string $lang): never {
     fail_page($lang, 422, $message);
 }
 
+/** cPanel-compatible writable store used only for lightweight form-abuse guards. */
 function form_guard_directory(): ?string {
     $suffix = substr(hash('sha256', AMNAISYS_FROM_ADDRESS), 0, 12);
     $dir = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'amnaisys-form-guard-'.$suffix;
@@ -58,10 +68,11 @@ function form_guard_directory(): ?string {
     return $dir;
 }
 
+/** Moderate limits: 5 accepted attempts/10 minutes and 20/day per server-observed IP. */
 function enforce_rate_limit(string $clientKey, string $lang): void {
     $dir = form_guard_directory();
     if ($dir === null) {
-        return;
+        return; // Fail open if temporary storage is unavailable; form delivery remains functional.
     }
     $path = $dir.DIRECTORY_SEPARATOR.'rate-'.hash('sha256', $clientKey).'.json';
     $fp = @fopen($path, 'c+');
@@ -103,6 +114,7 @@ function enforce_rate_limit(string $clientKey, string $lang): void {
     }
 }
 
+/** Reserve a submission fingerprint for 30 minutes so double-clicks/replays do not send duplicate mail. */
 function reserve_duplicate_submission(string $fingerprint): bool {
     $dir = form_guard_directory();
     if ($dir === null) {
@@ -111,6 +123,7 @@ function reserve_duplicate_submission(string $fingerprint): bool {
     $path = $dir.DIRECTORY_SEPARATOR.'duplicates.json';
     $fp = @fopen($path, 'c+');
     if ($fp === false) {
+        error_log('AMNAISYS duplicate-guard file could not be opened.');
         return true;
     }
     try {
@@ -147,6 +160,7 @@ function reserve_duplicate_submission(string $fingerprint): bool {
     }
 }
 
+/** Release a reservation if Microsoft Graph fails, so a legitimate visitor can retry. */
 function release_duplicate_submission(string $fingerprint): void {
     $dir = form_guard_directory();
     if ($dir === null) {
@@ -192,6 +206,37 @@ function fail_page(string $lang, int $status = 400, ?string $bodyOverride = null
     header('Content-Type: text/html; charset=UTF-8');
     echo '<!doctype html><html lang="'.($ar?'ar':'en').'" dir="'.($ar?'rtl':'ltr').'"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>'.htmlspecialchars($title,ENT_QUOTES,'UTF-8').'</title><style>body{font-family:system-ui,sans-serif;background:#faf7f1;color:#171717;margin:0;display:grid;place-items:center;min-height:100vh;padding:24px}.box{max-width:680px;background:#fff;border:1px solid #e3ded3;border-radius:12px;padding:32px}a{color:#006c3c;font-weight:700}</style><div class="box"><h1>'.htmlspecialchars($title,ENT_QUOTES,'UTF-8').'</h1><p>'.htmlspecialchars($body,ENT_QUOTES,'UTF-8').'</p><p><a href="'.$back.'">'.htmlspecialchars($backLabel,ENT_QUOTES,'UTF-8').'</a></p></div></html>';
     exit;
+}
+
+/**
+ * Append row data to Google Sheet via Google Apps Script Web App.
+ */
+function append_to_google_sheet(array $data): bool {
+    if (GOOGLE_SHEET_WEBHOOK_URL === '' || str_contains(GOOGLE_SHEET_WEBHOOK_URL, 'YOUR_APPS_SCRIPT_ID')) {
+        return false;
+    }
+
+    $ch = curl_init(GOOGLE_SHEET_WEBHOOK_URL);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+        CURLOPT_FOLLOWLOCATION => true, // Google Apps Script redirects (HTTP 302) to its execution endpoint
+        CURLOPT_TIMEOUT        => 10,
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/json; charset=UTF-8'],
+    ]);
+
+    $response = curl_exec($ch);
+    $curlErr = curl_error($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($curlErr !== '' || ($httpCode !== 200 && $httpCode !== 302)) {
+        error_log("Google Sheets Webhook Error ({$httpCode}): " . ($curlErr ?: (string)$response));
+        return false;
+    }
+
+    return true;
 }
 
 /**
@@ -298,22 +343,20 @@ if (!in_array($formTypeRaw, ['contact', 'consultation'], true)) {
     validation_fail($lang);
 }
 $formType = $formTypeRaw;
+
 $returnTo = post_string('return_to');
 $allowedReturn = ['/en/thank-you.html', '/ar/thank-you.html'];
 if (!in_array($returnTo, $allowedReturn, true)) {
     $returnTo = $lang === 'ar' ? '/ar/thank-you.html' : '/en/thank-you.html';
 }
 
-// Honeypot: successful-looking redirect prevents basic bots from learning the rule.
+// Existing honeypot behavior is preserved: acknowledge silently so bots do not learn the rule.
 if (trim(post_string('website')) !== '') {
     header('Location: '.$returnTo, true, 303);
     exit;
 }
 
-$clientIp = clean_line((string)($_SERVER['REMOTE_ADDR'] ?? 'unknown'), 80);
-enforce_rate_limit($clientIp !== '' ? $clientIp : 'unknown', $lang);
-
-// Optional low-friction timing signal populated by JavaScript. No-JS submissions remain supported.
+// Optional low-friction timing signal supplied by main.js. No-JS submissions remain supported.
 $formStartedRaw = post_string('form_started');
 if ($formStartedRaw !== '' && ctype_digit($formStartedRaw)) {
     $elapsedMs = (int)round(microtime(true) * 1000) - (int)$formStartedRaw;
@@ -325,7 +368,7 @@ if ($formStartedRaw !== '' && ctype_digit($formStartedRaw)) {
     }
 }
 
-// Validate raw values before truncating/normalizing them so oversized direct POSTs are rejected, not silently clipped.
+// Validate RAW values first. Oversized/direct POSTs are rejected rather than silently truncated.
 $nameRaw = trim(post_string('name'));
 $companyRaw = trim(post_string('company'));
 $emailRaw = trim(post_string('email'));
@@ -363,6 +406,7 @@ if ($messageLength < 20 || $messageLength > 1000) {
     validation_fail($lang);
 }
 
+// Required Service values must come from the real EN/AR form options; labels may differ, values do not.
 $contactServices = [
     'AI Automation', 'AI Agents', 'Cybersecurity', 'Cloud & Infrastructure', 'Managed IT Services',
     'Software Engineering', 'DevOps & DevSecOps', 'Systems Integration & APIs', 'Data Engineering',
@@ -387,16 +431,15 @@ $allowedRequiredServices = $formType === 'consultation' ? $consultationServices 
 if (!in_array($requiredServiceRaw, $allowedRequiredServices, true)) {
     validation_fail($lang);
 }
-
 if ($formType === 'consultation') {
     foreach ($optionalSelects as $key => $allowedValues) {
-        $value = post_string($key);
-        if (!in_array($value, $allowedValues, true)) {
+        if (!in_array(post_string($key), $allowedValues, true)) {
             validation_fail($lang);
         }
     }
 }
 
+// Sanitized values passed to the EXISTING Microsoft Graph and Google Sheets workflows.
 $name = clean_line($nameRaw, 100);
 $company = clean_line($companyRaw, 150);
 $email = clean_line($emailRaw, 254);
@@ -421,6 +464,9 @@ foreach ($labels as $key => $label) {
     }
 }
 
+$clientIp = clean_line((string)($_SERVER['REMOTE_ADDR'] ?? 'unknown'), 80);
+enforce_rate_limit($clientIp !== '' ? $clientIp : 'unknown', $lang);
+
 $formLabel = $formType === 'consultation' ? 'Consultation Request' : 'Contact Inquiry';
 $subject = '[AMNAISYS] '.$formLabel.' — '.$name.' — '.$company;
 $host = clean_line((string)($_SERVER['HTTP_HOST'] ?? 'amnaisys.com'), 120);
@@ -434,22 +480,32 @@ $body = "AMNAISYS website submission\n\n".
 $normalizedMessage = preg_replace('/\s+/u', ' ', $message) ?? $message;
 $duplicateFingerprint = hash('sha256', strtolower($email).'|'.$phoneDigits.'|'.$requiredService.'|'.$normalizedMessage);
 if (!reserve_duplicate_submission($duplicateFingerprint)) {
-    // Duplicate within 30 minutes: acknowledge without generating another Microsoft 365 message.
+    // Duplicate within 30 minutes: acknowledge without generating another Microsoft 365 message or Sheet row.
     header('Location: '.$returnTo, true, 303);
     exit;
 }
 
-$sent = send_via_graph_api(
-    AMNAISYS_FORM_RECIPIENT,
-    $email,
-    $name,
-    $subject,
-    $body
-);
+// 1. EXISTING Microsoft Graph API delivery remains the primary, blocking operation.
+$sent = send_via_graph_api(AMNAISYS_FORM_RECIPIENT, $email, $name, $subject, $body);
 if (!$sent) {
     release_duplicate_submission($duplicateFingerprint);
     fail_page($lang, 500);
 }
+
+// 2. EXISTING Google Sheets append remains non-blocking after successful email delivery.
+append_to_google_sheet([
+    'timestamp' => date('Y-m-d H:i:s T'),
+    'form_type' => $formType,
+    'language'  => $lang,
+    'name'      => $name,
+    'company'   => $company,
+    'email'     => $email,
+    'phone'     => $phone,
+    'service'   => $requiredService,
+    'details'   => implode('; ', $details),
+    'message'   => $message,
+    'ip'        => $clientIp,
+]);
 
 header('Location: '.$returnTo, true, 303);
 exit;
