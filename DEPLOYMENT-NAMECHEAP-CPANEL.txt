@@ -1,11 +1,40 @@
-AMNAISYS — Namecheap cPanel / VPS deployment notes
+AMNAISYS — Namecheap cPanel / Microsoft 365 SMTP deployment notes
 
 1. Upload the CONTENTS of this folder to the document root (normally public_html).
 2. Keep .htaccess and submit-form.php in the document root.
-3. Ensure the mailbox inquiries@amnaisys.com exists and is monitored.
-4. The PHP handler sends website form mail to inquiries@amnaisys.com using PHP mail().
-5. Confirm PHP mail() is enabled on the hosting account. If the host requires authenticated SMTP,
-   replace the mail() transport with the host's SMTP settings before launch.
-6. HTTPS must be enabled before production. The included HSTS rule assumes HTTPS operation.
-7. After deployment, submit all four form paths (EN/AR Contact and Consultation) and confirm receipt.
-8. Do not rename submit-form.php unless the four form action attributes are updated as well.
+3. Ensure the mailbox inquiries@amnaisys.com exists and is monitored in Microsoft 365 / Outlook.
+4. The four website forms (EN/AR Contact and EN/AR Consultation) all post to submit-form.php.
+5. Form delivery now uses Microsoft 365 SMTP rather than PHP mail():
+      SMTP host: smtp.office365.com
+      Port: 587
+      Encryption: STARTTLS / TLS
+      From: inquiries@amnaisys.com
+      To: inquiries@amnaisys.com
+      Reply-To: the visitor's validated email address
+   The current transport is intentionally configured without an SMTP username/password, according
+   to the deployment configuration provided for this site. The Microsoft 365 tenant / relay setup must
+   permit this server to submit mail using the above route.
+6. PHP requirements on the Namecheap account:
+      - PHP 8.x recommended
+      - OpenSSL enabled
+      - outbound TCP connections to smtp.office365.com:587 allowed
+      - stream_socket_client() and stream_socket_enable_crypto() available
+7. HTTPS must be enabled before production. The included HSTS rule assumes HTTPS operation.
+8. After deployment, submit all four live form paths and confirm message receipt in Microsoft 365:
+      /en/contact.html
+      /ar/contact.html
+      /en/consultation.html
+      /ar/consultation.html
+   For each test confirm:
+      - the browser redirects to the correct EN/AR thank-you page;
+      - the message arrives at inquiries@amnaisys.com;
+      - From displays as AMNAISYS Website <inquiries@amnaisys.com>;
+      - Reply-To points to the visitor's submitted email;
+      - Arabic content is readable and preserved.
+9. If a form returns the friendly "Unable to send your request" page, inspect the PHP error log.
+   SMTP transport failures are logged server-side as "AMNAISYS SMTP ..." messages; technical SMTP
+   responses are never shown to website visitors.
+10. If Microsoft 365 rejects the SMTP transaction because the server is not authorized to relay,
+    the Microsoft 365 / hosting-side SMTP or connector configuration must be adjusted. Do not fall
+    back to PHP mail() in production merely to bypass a relay rejection.
+11. Do not rename submit-form.php unless the four form action attributes are updated as well.
