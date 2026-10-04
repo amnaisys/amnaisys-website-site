@@ -1,24 +1,22 @@
 <?php
 declare(strict_types=1);
 
-// AMNAISYS website form handler — Microsoft 365 Authenticated SMTP transport.
-// All four localized Contact / Consultation forms post to this one handler.
+// AMNAISYS website form handler — Microsoft Graph API transport (HTTPS / Port 443).
+// All localized Contact / Consultation forms post to this one handler.
 const AMNAISYS_FORM_RECIPIENT = 'inquiries@amnaisys.com';
-const AMNAISYS_FROM_ADDRESS = 'inquiries@amnaisys.com';
-const AMNAISYS_FROM_NAME = 'AMNAISYS Website';
-const AMNAISYS_SMTP_HOST = 'smtp.office365.com';
-const AMNAISYS_SMTP_PORT = 587;
-const AMNAISYS_SMTP_TIMEOUT = 20;
-const AMNAISYS_SMTP_HELO = 'amnaisys.com';
+const AMNAISYS_FROM_ADDRESS   = 'inquiries@amnaisys.com';
+const AMNAISYS_FROM_NAME      = 'AMNAISYS Website';
 
-// SMTP Authentication Credentials
-const AMNAISYS_SMTP_USER = 'inquiries@amnaisys.com';
-const AMNAISYS_SMTP_PASS = 'zbvkccqccvxksngl'; // Replace with the mailbox/App password
+// Microsoft Entra ID / Microsoft 365 App Registration Credentials
+const M365_TENANT_ID     = 'c4e65f16-84c1-44d5-b50c-715bdef50038';
+const M365_CLIENT_ID     = 'd075c03d-38c4-4a99-9861-a76509cd8973';
+const M365_CLIENT_SECRET = 'ZwY8Q~tJcIfbxd1aT0kbRpikIpdP2ANybAIBWdnx';
 
 function clean_line(string $value, int $max = 200): string {
     $value = trim(preg_replace('/[\r\n\t]+/u', ' ', $value) ?? '');
     return function_exists('mb_substr') ? mb_substr($value, 0, $max, 'UTF-8') : substr($value, 0, $max);
 }
+
 function clean_text(string $value, int $max = 3000): string {
     $value = trim($value);
     return function_exists('mb_substr') ? mb_substr($value, 0, $max, 'UTF-8') : substr($value, 0, $max);
@@ -52,7 +50,7 @@ function validation_fail(string $lang): never {
 }
 
 function form_guard_directory(): ?string {
-    $suffix = substr(hash('sha256', AMNAISYS_SMTP_HELO), 0, 12);
+    $suffix = substr(hash('sha256', AMNAISYS_FROM_ADDRESS), 0, 12);
     $dir = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'amnaisys-form-guard-'.$suffix;
     if (!is_dir($dir) && !@mkdir($dir, 0700, true) && !is_dir($dir)) {
         error_log('AMNAISYS form guard directory could not be created.');
@@ -198,169 +196,97 @@ function fail_page(string $lang, int $status = 400, ?string $bodyOverride = null
 }
 
 /**
- * Read one complete SMTP response, including RFC 5321 multiline replies.
- * Returns [statusCode, rawResponse].
+ * Send an email using Microsoft Graph API (OAuth 2.0 Client Credentials over HTTPS/443).
  */
-function smtp_read_response($socket): array {
-    $response = '';
-    $code = 0;
-    while (($line = fgets($socket, 515)) !== false) {
-        $response .= $line;
-        if (preg_match('/^(\d{3})([ -])/', $line, $match)) {
-            $code = (int)$match[1];
-            if ($match[2] === ' ') {
-                break;
-            }
-        }
-    }
-    return [$code, trim($response)];
-}
+function send_via_graph_api(string $to, string $replyTo, string $replyName, string $subject, string $body): bool {
+    // 1. Acquire OAuth2 Bearer Token from Microsoft identity platform
+    $tokenEndpoint = 'https://login.microsoftonline.com/' . M365_TENANT_ID . '/oauth2/v2.0/token';
+    $tokenParams = [
+        'client_id'     => M365_CLIENT_ID,
+        'client_secret' => M365_CLIENT_SECRET,
+        'scope'         => 'https://graph.microsoft.com/.default',
+        'grant_type'    => 'client_credentials',
+    ];
 
-/** Write the complete buffer to the SMTP socket, even if fwrite() returns a partial count. */
-function smtp_write_all($socket, string $data): void {
-    $length = strlen($data);
-    $offset = 0;
-    while ($offset < $length) {
-        $written = fwrite($socket, substr($data, $offset));
-        if ($written === false || $written === 0) {
-            throw new RuntimeException('SMTP write failed.');
-        }
-        $offset += $written;
-    }
-}
+    $ch = curl_init($tokenEndpoint);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => http_build_query($tokenParams),
+        CURLOPT_TIMEOUT        => 15,
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/x-www-form-urlencoded'],
+    ]);
 
-/** Send one SMTP command and require one of the expected response codes. */
-function smtp_command($socket, string $command, array $expectedCodes): array {
-    if ($command !== '') {
-        smtp_write_all($socket, $command."\r\n");
-    }
-    [$code, $response] = smtp_read_response($socket);
-    if (!in_array($code, $expectedCodes, true)) {
-        throw new RuntimeException('SMTP command failed ('.$code.'): '.$response);
-    }
-    return [$code, $response];
-}
+    $tokenResponse = curl_exec($ch);
+    $curlErr = curl_error($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
 
-/** RFC 5322 header encoding with a safe fallback when mbstring is unavailable. */
-function encode_mail_header(string $value): string {
-    if (preg_match('/^[\x20-\x7E]*$/', $value)) {
-        return $value;
+    if ($curlErr !== '' || $httpCode !== 200) {
+        error_log("Microsoft Graph Token Error ({$httpCode}): " . ($curlErr ?: (string)$tokenResponse));
+        return false;
     }
-    if (function_exists('mb_encode_mimeheader')) {
-        return mb_encode_mimeheader($value, 'UTF-8', 'B', "\r\n");
+
+    $tokenData = json_decode((string)$tokenResponse, true);
+    $accessToken = $tokenData['access_token'] ?? '';
+    if ($accessToken === '') {
+        error_log('Microsoft Graph: access_token not found in response.');
+        return false;
     }
-    return '=?UTF-8?B?'.base64_encode($value).'?=';
-}
 
-/** Dot-stuff data lines as required by SMTP DATA framing. */
-function smtp_dot_stuff(string $data): string {
-    $data = preg_replace("/\r\n|\r|\n/", "\r\n", $data) ?? $data;
-    return preg_replace('/(?m)^\./', '..', $data) ?? $data;
-}
+    // 2. Transmit message via Graph sendMail endpoint
+    $sendMailEndpoint = 'https://graph.microsoft.com/v1.0/users/' . rawurlencode(AMNAISYS_FROM_ADDRESS) . '/sendMail';
+    
+    $payload = [
+        'message' => [
+            'subject' => $subject,
+            'body' => [
+                'contentType' => 'Text',
+                'content'     => $body,
+            ],
+            'toRecipients' => [
+                [
+                    'emailAddress' => [
+                        'address' => $to,
+                    ],
+                ],
+            ],
+            'replyTo' => [
+                [
+                    'emailAddress' => [
+                        'name'    => $replyName,
+                        'address' => $replyTo,
+                    ],
+                ],
+            ],
+        ],
+        'saveToSentItems' => true,
+    ];
 
-/**
- * Send a UTF-8 plain-text message using Microsoft 365 STARTTLS on port 587 with AUTH LOGIN.
- */
-function send_via_microsoft365_smtp(string $to, string $replyTo, string $replyName, string $fromName, string $subject, string $body): bool {
-    $context = stream_context_create([
-        'ssl' => [
-            'verify_peer' => true,
-            'verify_peer_name' => true,
-            'allow_self_signed' => false,
-            'peer_name' => AMNAISYS_SMTP_HOST,
-            'SNI_enabled' => true,
+    $ch = curl_init($sendMailEndpoint);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+        CURLOPT_TIMEOUT        => 20,
+        CURLOPT_HTTPHEADER     => [
+            'Authorization: Bearer ' . $accessToken,
+            'Content-Type: application/json; charset=UTF-8',
         ],
     ]);
 
-    $errno = 0;
-    $errstr = '';
-    $socket = @stream_socket_client(
-        'tcp://'.AMNAISYS_SMTP_HOST.':'.AMNAISYS_SMTP_PORT,
-        $errno,
-        $errstr,
-        AMNAISYS_SMTP_TIMEOUT,
-        STREAM_CLIENT_CONNECT,
-        $context
-    );
+    $sendResponse = curl_exec($ch);
+    $curlErr = curl_error($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
 
-    if (!is_resource($socket)) {
-        error_log('AMNAISYS SMTP connection failed: '.$errno.' '.$errstr);
+    // Microsoft Graph returns HTTP 202 Accepted on success
+    if ($httpCode !== 202) {
+        error_log("Microsoft Graph sendMail Error ({$httpCode}): " . ($curlErr ?: (string)$sendResponse));
         return false;
     }
 
-    stream_set_timeout($socket, AMNAISYS_SMTP_TIMEOUT);
-
-    try {
-        smtp_command($socket, '', [220]);
-        smtp_command($socket, 'EHLO '.AMNAISYS_SMTP_HELO, [250]);
-        smtp_command($socket, 'STARTTLS', [220]);
-
-        if (!stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-            throw new RuntimeException('Unable to enable STARTTLS.');
-        }
-
-        // RFC 3207 requires EHLO again after STARTTLS establishes a new SMTP state.
-        smtp_command($socket, 'EHLO '.AMNAISYS_SMTP_HELO, [250]);
-
-        // RFC 4954 SMTP Authentication via AUTH LOGIN
-        smtp_command($socket, 'AUTH LOGIN', [334]);
-        smtp_command($socket, base64_encode(AMNAISYS_SMTP_USER), [334]);
-        smtp_command($socket, base64_encode(AMNAISYS_SMTP_PASS), [235]);
-
-        smtp_command($socket, 'MAIL FROM:<'.AMNAISYS_FROM_ADDRESS.'>', [250]);
-        smtp_command($socket, 'RCPT TO:<'.$to.'>', [250, 251]);
-        smtp_command($socket, 'DATA', [354]);
-
-        $encodedSubject = encode_mail_header($subject);
-        $encodedFromName = encode_mail_header($fromName);
-        $encodedReplyName = encode_mail_header($replyName);
-        $encodedBody = quoted_printable_encode($body);
-        $messageIdHost = preg_replace('/[^A-Za-z0-9.-]/', '', AMNAISYS_SMTP_HELO) ?: 'amnaisys.com';
-        try {
-            $messageToken = bin2hex(random_bytes(12));
-        } catch (Throwable $e) {
-            $messageToken = sha1(uniqid('', true));
-        }
-
-        $headers = [
-            'Date: '.date(DATE_RFC2822),
-            'Message-ID: <'.$messageToken.'@'.$messageIdHost.'>',
-            'From: '.$encodedFromName.' <'.AMNAISYS_FROM_ADDRESS.'>',
-            'To: <'.$to.'>',
-            'Reply-To: '.$encodedReplyName.' <'.$replyTo.'>',
-            'Subject: '.$encodedSubject,
-            'MIME-Version: 1.0',
-            'Content-Type: text/plain; charset=UTF-8',
-            'Content-Transfer-Encoding: quoted-printable',
-            'X-Mailer: AMNAISYS Website SMTP',
-        ];
-
-        $payload = implode("\r\n", $headers)."\r\n\r\n".$encodedBody;
-        $payload = smtp_dot_stuff($payload);
-        if (substr($payload, -2) !== "\r\n") {
-            $payload .= "\r\n";
-        }
-
-        smtp_write_all($socket, $payload.".\r\n");
-        smtp_command($socket, '', [250]);
-
-        // QUIT is best-effort; successful DATA acceptance already means the message was queued.
-        try {
-            smtp_write_all($socket, "QUIT\r\n");
-            @smtp_read_response($socket);
-        } catch (Throwable $e) {
-            // Message was already accepted; QUIT failure does not change delivery status.
-        }
-        fclose($socket);
-        return true;
-    } catch (Throwable $e) {
-        error_log('AMNAISYS SMTP send failed: '.$e->getMessage());
-        if (is_resource($socket)) {
-            @fwrite($socket, "QUIT\r\n");
-            fclose($socket);
-        }
-        return false;
-    }
+    return true;
 }
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
@@ -498,7 +424,6 @@ foreach ($labels as $key => $label) {
 
 $formLabel = $formType === 'consultation' ? 'Consultation Request' : 'Contact Inquiry';
 $subject = '[AMNAISYS] '.$formLabel.' — '.$name.' — '.$company;
-$fromDisplayName = $name.' via '.AMNAISYS_FROM_NAME;
 $host = clean_line((string)($_SERVER['HTTP_HOST'] ?? 'amnaisys.com'), 120);
 $ua = clean_line((string)($_SERVER['HTTP_USER_AGENT'] ?? 'unknown'), 300);
 
@@ -515,11 +440,10 @@ if (!reserve_duplicate_submission($duplicateFingerprint)) {
     exit;
 }
 
-$sent = send_via_microsoft365_smtp(
+$sent = send_via_graph_api(
     AMNAISYS_FORM_RECIPIENT,
     $email,
     $name,
-    $fromDisplayName,
     $subject,
     $body
 );
